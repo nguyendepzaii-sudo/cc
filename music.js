@@ -2,8 +2,8 @@
    DANH SÁCH BÀI HÁT (SỬA DANH SÁCH NHẠC TẠI ĐÂY)
 ========================================== */
 const songs = [
-    "music1.flac",
-    "music2.flac"
+    "Tien Tien - My Everything.flac",
+    "bob$ - Ít Bạn Ít Nạn.flac"
 ];
 
 /* ==========================================
