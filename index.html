@@ -2,708 +2,638 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>spekco | Profile</title>
 
-<!-- Google Font Inter -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>spekco | Profile</title>
 
 <style>
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 html {
-    height: 100%;
-}
-
-body {
-    min-height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    color: #ffffff;
-    background-color: #0b0314;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
 }
 
 /* =========================
-   BACKGROUND AMBIENT GLOW
+   BODY & BACKGROUND FIX
 ========================= */
 
-.bg-glow-1, .bg-glow-2 {
-    position: fixed;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.45;
-    z-index: 0;
-    pointer-events: none;
-    animation: floatBg 12s infinite alternate ease-in-out;
-}
-
-.bg-glow-1 {
-    top: 10%;
-    left: 50%;
-    transform: translateX(-120%);
-    background: radial-gradient(circle, #ff60c5, #a66cff);
-}
-
-.bg-glow-2 {
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(20%);
-    background: radial-gradient(circle, #6cff3d, #4facfe);
-    animation-delay: -6s;
-}
-
-@keyframes floatBg {
-    0% { transform: translate(-10%, -10%) scale(1); }
-    100% { transform: translate(10%, 10%) scale(1.15); }
+body {
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    color: white;
+    background-color: #0f051d;
 }
 
 /* =========================
-   CONTAINER & CARDS
+   MAIN
 ========================= */
 
 .container {
-    width: calc(100% - 24px);
-    max-width: 390px;
-    margin: 24px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-}
-
-.card {
-    width: 100%;
-    padding: 20px;
-    border-radius: 24px;
-    background: rgba(23, 12, 38, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.container > div:nth-child(1) { animation-delay: 0.1s; }
-.container > div:nth-child(2) { animation-delay: 0.2s; }
-.container > div:nth-child(3) { animation-delay: 0.3s; }
-.container > div:nth-child(4) { animation-delay: 0.4s; }
-
-.card:hover {
-    border-color: rgba(255, 180, 220, 0.3);
-    box-shadow: 
-        0 16px 45px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(255, 150, 210, 0.1);
-}
-
-@keyframes slideUpFade {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    width: calc(100% - 24px);
+    max-width: 390px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 /* =========================
-   PROFILE SECTION
+   GLASS CARD
+========================= */
+
+.card {
+    width: 100%;
+    padding: 18px;
+    border-radius: 22px;
+    background: rgba(20, 10, 35, 0.48);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow:
+        0 8px 35px rgba(0,0,0,0.35),
+        inset 0 0 20px rgba(255,255,255,0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* =========================
+   PROFILE
 ========================= */
 
 .profile-card {
-    text-align: center;
-    padding-top: 24px;
+    text-align: center;
+    padding-top: 22px;
 }
 
 .speech-bubble {
-    display: inline-block;
-    max-width: 100%;
-    padding: 8px 14px;
-    margin-bottom: 18px;
-    border-radius: 16px;
-    background: rgba(255, 150, 210, 0.12);
-    border: 1px solid rgba(255, 180, 220, 0.25);
-    color: #ffe5f3;
-    font-size: 12px;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(255, 100, 200, 0.1);
-    animation: floatBubble 4s ease-in-out infinite;
+    display: inline-block;
+    max-width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    background: rgba(255, 150, 210, 0.18);
+    border: 1px solid rgba(255, 180, 220, 0.35);
+    color: #ffe5f3;
+    font-size: 12px;
 }
 
-@keyframes floatBubble {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
+/* =========================
+   AVATAR
+========================= */
 
 .avatar-wrapper {
-    width: 96px;
-    height: 96px;
-    margin: 0 auto 14px;
-    padding: 3px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff9edc, #a66cff, #6cff3d);
-    background-size: 200% 200%;
-    box-shadow: 0 0 25px rgba(220, 100, 255, 0.5);
-    animation: gradientRotate 6s ease infinite;
-}
-
-@keyframes gradientRotate {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 12px;
+    padding: 3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9edc, #a66cff, #ff9edc);
+    box-shadow: 0 0 25px rgba(220,100,255,0.65);
 }
 
 .avatar {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(15, 5, 29, 0.8);
-    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.8);
 }
 
-.avatar-wrapper:hover .avatar {
-    transform: scale(1.04);
-}
+/* =========================
+   USERNAME
+========================= */
 
 .username {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    background: linear-gradient(180deg, #ffffff 0%, #e2d2f7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
+/* =========================
+   STATUS
+========================= */
+
 .status-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-    color: #8eff5c;
-    font-size: 13px;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 6px;
+    color: #9cff68;
+    font-size: 13px;
+    transition: color 0.3s ease;
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #6cff3d;
-    box-shadow: 0 0 12px #6cff3d;
-    animation: pulse 2s infinite ease-in-out;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #6cff3d;
+    box-shadow: 0 0 10px #6cff3d;
+    animation: pulse 1.5s infinite;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.status-badge.offline-text { color: #aaaaaa; }
+/* Style khi Offline */
+.status-badge.offline-text {
+    color: #aaaaaa;
+}
+
 .status-dot.offline {
-    background: #888888;
-    box-shadow: none;
-    animation: none;
+    background: #888888;
+    box-shadow: none;
+    animation: none;
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.4); opacity: 0.5; }
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 /* =========================
-   STATUS CARD
+   STATUS CARD
 ========================= */
 
 .status-card {
-    text-align: center;
-    color: #dfd5ed;
-    font-size: 13.5px;
-    font-style: italic;
-    line-height: 1.4;
+    text-align: center;
+    color: #e9dff5;
+    font-size: 14px;
+    font-style: italic;
 }
 
 /* =========================
-   MUSIC PLAYER
+   MUSIC
 ========================= */
 
-.music-card { text-align: center; }
-
-.music-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 8px;
+.music-card {
+    text-align: center;
 }
 
 .music-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #ff9bd8;
-}
-
-.equalizer {
-    display: none;
-    align-items: flex-end;
-    gap: 2px;
-    height: 12px;
-}
-
-.equalizer.active { display: flex; }
-
-.bar {
-    width: 2px;
-    background-color: #ff9bd8;
-    border-radius: 2px;
-    animation: bounce 0.8s ease infinite alternate;
-}
-
-.bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
-.bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
-.bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
-
-@keyframes bounce {
-    100% { height: 10%; }
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ff9bd8;
+    margin-bottom: 8px;
 }
 
 .clock {
-    font-size: 26px;
-    font-weight: 700;
-    color: #ff8fd2;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-    text-shadow: 0 0 15px rgba(255, 143, 210, 0.3);
+    font-size: 25px;
+    font-weight: bold;
+    color: #ff8fd2;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
 }
 
 .song-title {
-    font-size: 13.5px;
-    font-weight: 500;
-    color: #ffffff;
-    margin-bottom: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 8px;
-}
-
-.progress-container {
-    width: 100%;
-    margin-bottom: 6px;
-}
-
-#progress {
-    width: 100%;
-    height: 5px;
-    appearance: none;
-    -webkit-appearance: none;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.15);
-    outline: none;
-    cursor: pointer;
-    transition: height 0.2s ease;
-}
-
-#progress:hover { height: 7px; }
-
-#progress::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #ff8fd2;
-    box-shadow: 0 0 12px rgba(255, 100, 210, 0.9);
-    transition: transform 0.2s ease;
-}
-
-#progress::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.time-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    font-weight: 500;
-    color: #a79cb5;
-    margin-top: 6px;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    margin-top: 14px;
-}
-
-.music-button {
-    width: 44px;
-    height: 44px;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.music-button:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: scale(1.06);
-}
-
-.music-button:active {
-    transform: scale(0.92);
-}
-
-.play-button {
-    width: 56px;
-    height: 56px;
-    font-size: 20px;
-    background: linear-gradient(135deg, rgba(255, 120, 200, 0.8), rgba(150, 100, 255, 0.8));
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 25px rgba(220, 100, 255, 0.4);
-}
-
-.play-button:hover {
-    box-shadow: 0 0 30px rgba(220, 100, 255, 0.6);
-    transform: scale(1.08);
-}
-
-.play-button.playing {
-    animation: glowPulse 2s infinite ease-in-out;
-}
-
-@keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(220, 100, 255, 0.4); }
-    50% { box-shadow: 0 0 35px rgba(220, 100, 255, 0.8); }
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* =========================
-   TECH STACK
+   PROGRESS BAR
 ========================= */
 
-.tech-card { padding: 16px 20px 20px; }
+.progress-container {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#progress {
+    width: 100%;
+    height: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    outline: none;
+}
+
+#progress::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff8fd2;
+    box-shadow: 0 0 10px rgba(255,100,210,0.8);
+}
+
+.time-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #cfc5da;
+    margin-top: 5px;
+}
+
+/* =========================
+   MUSIC BUTTONS
+========================= */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 13px;
+}
+
+.music-button {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.music-button:active {
+    transform: scale(0.88);
+    background: rgba(255,150,220,0.3);
+}
+
+.play-button {
+    width: 56px;
+    height: 56px;
+    font-size: 21px;
+    background: linear-gradient(135deg, rgba(255,120,200,0.65), rgba(150,100,255,0.65));
+    box-shadow: 0 0 20px rgba(220,100,255,0.35);
+}
+
+/* =========================
+   TECH STACK LOGOS
+========================= */
 
 .tech-title {
-    text-align: center;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #ff9bd8;
-    margin-bottom: 14px;
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ff9bd8;
+    margin-bottom: 12px;
 }
 
 .tech-stack {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
 }
 
 .tech-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: pointer;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.tech-icon:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .tech-icon svg {
-    width: 26px;
-    height: 26px;
-    display: block;
-    transition: transform 0.3s ease;
+    width: 28px;
+    height: 28px;
+    display: block;
 }
 
-.tech-icon[title="JavaScript"]:hover {
-    background: rgba(247, 223, 30, 0.15);
-    border-color: rgba(247, 223, 30, 0.5);
-    box-shadow: 0 8px 20px rgba(247, 223, 30, 0.3);
-    transform: translateY(-4px) scale(1.05);
-}
-
-.tech-icon[title="HTML5"]:hover {
-    background: rgba(228, 77, 38, 0.15);
-    border-color: rgba(228, 77, 38, 0.5);
-    box-shadow: 0 8px 20px rgba(228, 77, 38, 0.3);
-    transform: translateY(-4px) scale(1.05);
-}
-
-.tech-icon[title="Python"]:hover {
-    background: rgba(56, 126, 184, 0.15);
-    border-color: rgba(56, 126, 184, 0.5);
-    box-shadow: 0 8px 20px rgba(56, 126, 184, 0.3);
-    transform: translateY(-4px) scale(1.05);
-}
-
-.tech-icon[title="Node.js"]:hover {
-    background: rgba(83, 158, 67, 0.15);
-    border-color: rgba(83, 158, 67, 0.5);
-    box-shadow: 0 8px 20px rgba(83, 158, 67, 0.3);
-    transform: translateY(-4px) scale(1.05);
-}
-
-.tech-icon:hover svg { transform: scale(1.1); }
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 420px) {
-    .container {
-        width: calc(100% - 20px);
-        margin: 16px auto;
-    }
-    .card { padding: 16px; border-radius: 20px; }
-    .clock { font-size: 24px; }
+    .container {
+        width: calc(100% - 18px);
+        margin: 12px auto;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .clock {
+        font-size: 22px;
+    }
 }
 
 </style>
 </head>
 
+
 <body>
 
-<div class="bg-glow-1"></div>
-<div class="bg-glow-2"></div>
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="container">
 
-    <!-- PROFILE CARD -->
-    <div class="card profile-card">
-        <div class="speech-bubble">
-            i wanna be cute like u lemme feel your molecules
-        </div>
+    <!-- PROFILE -->
+    <div class="card profile-card">
+        <div class="speech-bubble">
+            i wanna be cute like u lemme feel your molecules
+        </div>
 
-        <div class="avatar-wrapper">
-            <img
-                src="avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-                onerror="this.style.display='none';">
-        </div>
+        <div class="avatar-wrapper">
+            <img
+                src="avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+                onerror="this.style.display='none';">
+        </div>
 
-        <div class="username">
-            spekco
-        </div>
+        <div class="username">
+            spekco
+        </div>
 
-        <div class="status-badge" id="status-badge">
-            <span class="status-dot" id="status-dot"></span>
-            <span id="status-text">online</span>
-        </div>
-    </div>
+        <div class="status-badge" id="status-badge">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">online</span>
+        </div>
+    </div>
 
-    <!-- STATUS CARD -->
-    <div class="card status-card">
-        "I'm not currently doing anything!"
-    </div>
+    <!-- STATUS -->
+    <div class="card status-card">
+        "I'm not currently doing anything!"
+    </div>
 
-    <!-- MUSIC CARD -->
-    <div class="card music-card">
-        <div class="music-header">
-            <div class="music-label">NOW PLAYING</div>
-            <div class="equalizer" id="equalizer">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </div>
+    <!-- MUSIC PLAYER -->
+    <div class="card music-card">
+        <div class="music-label">
+            NOW PLAYING
+        </div>
 
-        <div class="clock" id="clock">
-            00:00:00 AM
-        </div>
+        <div class="clock" id="clock">
+            00:00:00 AM
+        </div>
 
-        <div class="song-title" id="song-name">
-            Loading...
-        </div>
+        <div class="song-title" id="song-name">
+            Loading...
+        </div>
 
-        <div class="progress-container">
-            <input
-                id="progress"
-                type="range"
-                min="0"
-                max="100"
-                value="0"
-                step="0.1">
+        <div class="progress-container">
+            <input
+                id="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                step="0.1">
 
-            <div class="time-row">
-                <span id="current-time">0:00</span>
-                <span id="duration">0:00</span>
-            </div>
-        </div>
+            <div class="time-row">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
 
-        <div class="controls">
-            <button class="music-button" id="prev-button" type="button" aria-label="Previous">⏮</button>
-            <button class="music-button play-button" id="play-button" type="button" aria-label="Play/Pause">▶</button>
-            <button class="music-button" id="next-button" type="button" aria-label="Next">⏭</button>
-        </div>
+        <div class="controls">
+            <button class="music-button" id="prev-button" type="button">⏮</button>
+            <button class="music-button play-button" id="play-button" type="button">▶</button>
+            <button class="music-button" id="next-button" type="button">⏭</button>
+        </div>
 
-        <audio id="audio-player" preload="metadata"></audio>
-    </div>
+        <audio id="audio-player" preload="metadata"></audio>
+    </div>
 
-    <!-- TECH STACK -->
-    <div class="card tech-card">
-        <div class="tech-title">TECH STACK</div>
-        <div class="tech-stack">
-            <div class="tech-icon" title="JavaScript">
-                <svg viewBox="0 0 128 128">
-                    <rect width="128" height="128" rx="16" fill="#F7DF1E"/>
-                    <path d="M67.31 102.06c3.48 5.61 8.28 9.38 16.32 9.38 6.84 0 11.52-3.36 11.52-8.04 0-5.64-4.56-7.8-12.24-11.16l-4.2-1.8c-12.24-5.16-20.28-11.52-20.28-25.08 0-12.36 9.6-21.72 24.84-21.72 10.92 0 18.96 3.96 24.36 13.44l-11.52 7.44c-3.12-5.4-6.48-7.32-12.48-7.32-4.56 0-7.8 2.88-7.8 6.48 0 4.68 3.12 6.72 10.32 9.84l4.2 1.8c14.76 6.36 22.32 12.36 22.32 26.28 0 14.88-11.64 22.92-28.56 22.92-15.6 0-25.08-7.56-29.88-16.92l13.08-7.56zM24.71 102.06c3.12 5.28 7.32 9.12 14.28 9.12 6.12 0 10.2-2.4 10.2-11.76V44.4h15.6v55.32c0 17.52-10.2 24.96-25.2 24.96-12.24 0-20.76-6.12-25.8-15.36l10.92-7.26z" fill="#000000"/>
-                </svg>
-            </div>
+    <!-- TECH STACK -->
+    <div class="card">
+        <div class="tech-stack">
+            <!-- JavaScript Logo -->
+            <div class="tech-icon" title="JavaScript">
+                <svg viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="16" fill="#F7DF1E"/>
+                    <path d="M67.31 102.06c3.48 5.61 8.28 9.38 16.32 9.38 6.84 0 11.52-3.36 11.52-8.04 0-5.64-4.56-7.8-12.24-11.16l-4.2-1.8c-12.24-5.16-20.28-11.52-20.28-25.08 0-12.36 9.6-21.72 24.84-21.72 10.92 0 18.96 3.96 24.36 13.44l-11.52 7.44c-3.12-5.4-6.48-7.32-12.48-7.32-4.56 0-7.8 2.88-7.8 6.48 0 4.68 3.12 6.72 10.32 9.84l4.2 1.8c14.76 6.36 22.32 12.36 22.32 26.28 0 14.88-11.64 22.92-28.56 22.92-15.6 0-25.08-7.56-29.88-16.92l13.08-7.56zM24.71 102.06c3.12 5.28 7.32 9.12 14.28 9.12 6.12 0 10.2-2.4 10.2-11.76V44.4h15.6v55.32c0 17.52-10.2 24.96-25.2 24.96-12.24 0-20.76-6.12-25.8-15.36l10.92-7.26z" fill="#000000"/>
+                </svg>
+            </div>
 
-            <div class="tech-icon" title="HTML5">
-                <svg viewBox="0 0 128 128">
-                    <path fill="#E44D26" d="M18.8 11.2l9.1 102.2 36.1 10 36.1-10 9.1-102.2H18.8z"/>
-                    <path fill="#F16529" d="M64 121.2l30.2-8.4 7.8-87.3H64v95.7z"/>
-                    <path fill="#EBEBEB" d="M64 54.1H48.4l-1.1-12.3H64V29.5H33.5l3.4 37H64v-12.4zm0 33.6l-13.7-3.7-.9-9.8H36.9l1.7 19.5 25.4 7V87.7z"/>
-                    <path fill="#FFFFFF" d="M64 54.1v12.4h14.5l-1.4 15.3-13.1 3.5v12.2l25.3-7 2.5-28.1c.2-2.1.2-3.8.2-5.9l.1-2.4H64zm0-24.6v12.3h31.8l1.1-12.3H64z"/>
-                </svg>
-            </div>
+            <!-- HTML5 Logo -->
+            <div class="tech-icon" title="HTML5">
+                <svg viewBox="0 0 128 128">
+                    <path fill="#E44D26" d="M18.8 11.2l9.1 102.2 36.1 10 36.1-10 9.1-102.2H18.8z"/>
+                    <path fill="#F16529" d="M64 121.2l30.2-8.4 7.8-87.3H64v95.7z"/>
+                    <path fill="#EBEBEB" d="M64 54.1H48.4l-1.1-12.3H64V29.5H33.5l3.4 37H64v-12.4zm0 33.6l-13.7-3.7-.9-9.8H36.9l1.7 19.5 25.4 7V87.7z"/>
+                    <path fill="#FFFFFF" d="M64 54.1v12.4h14.5l-1.4 15.3-13.1 3.5v12.2l25.3-7 2.5-28.1c.2-2.1.2-3.8.2-5.9l.1-2.4H64zm0-24.6v12.3h31.8l1.1-12.3H64z"/>
+                </svg>
+            </div>
 
-            <div class="tech-icon" title="Python">
-                <svg viewBox="0 0 128 128">
-                    <linearGradient id="py-a" x1="13.2" y1="12.5" x2="68.2" y2="70.2" gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#387EB8"/>
-                        <stop offset="1" stop-color="#366994"/>
-                    </linearGradient>
-                    <linearGradient id="py-b" x1="59.8" y1="58.2" x2="114.8" y2="115.8" gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#FFE052"/>
-                        <stop offset="1" stop-color="#FFC321"/>
-                    </linearGradient>
-                    <path fill="url(#py-a)" d="M63.1 11c-28.6 0-26.9 12.4-26.9 12.4l.1 12.8h27.4v3.9H25.3S11 38.5 11 67.4c0 28.9 12.5 27.8 12.5 27.8h7.5V82.8s-.4-14.8 14.5-14.8h25.1s13.8.2 13.8-13.3V25.2S86.2 11 63.1 11zm-14.7 9.1c2.7 0 4.9 2.2 4.9 4.9s-2.2 4.9-4.9 4.9-4.9-2.2-4.9-4.9 2.2-4.9 4.9-4.9z"/>
-                    <path fill="url(#py-b)" d="M64.9 117c28.6 0 26.9-12.4 26.9-12.4l-.1-12.8H64.3v-3.9h38.4s14.3 1.6 14.3-27.3c0-28.9-12.5-27.8-12.5-27.8h-7.5v12.4s.4 14.8-14.5 14.8H67.4s-13.8-.2-13.8 13.3v29.5s-1.8 14.2 21.3 14.2zm14.7-9.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9 4.9 2.2 4.9 4.9-2.2 4.9-4.9 4.9z"/>
-                </svg>
-            </div>
+            <!-- Python Logo -->
+            <div class="tech-icon" title="Python">
+                <svg viewBox="0 0 128 128">
+                    <linearGradient id="py-a" x1="13.2" y1="12.5" x2="68.2" y2="70.2" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#387EB8"/>
+                        <stop offset="1" stop-color="#366994"/>
+                    </linearGradient>
+                    <linearGradient id="py-b" x1="59.8" y1="58.2" x2="114.8" y2="115.8" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#FFE052"/>
+                        <stop offset="1" stop-color="#FFC321"/>
+                    </linearGradient>
+                    <path fill="url(#py-a)" d="M63.1 11c-28.6 0-26.9 12.4-26.9 12.4l.1 12.8h27.4v3.9H25.3S11 38.5 11 67.4c0 28.9 12.5 27.8 12.5 27.8h7.5V82.8s-.4-14.8 14.5-14.8h25.1s13.8.2 13.8-13.3V25.2S86.2 11 63.1 11zm-14.7 9.1c2.7 0 4.9 2.2 4.9 4.9s-2.2 4.9-4.9 4.9-4.9-2.2-4.9-4.9 2.2-4.9 4.9-4.9z"/>
+                    <path fill="url(#py-b)" d="M64.9 117c28.6 0 26.9-12.4 26.9-12.4l-.1-12.8H64.3v-3.9h38.4s14.3 1.6 14.3-27.3c0-28.9-12.5-27.8-12.5-27.8h-7.5v12.4s.4 14.8-14.5 14.8H67.4s-13.8-.2-13.8 13.3v29.5s-1.8 14.2 21.3 14.2zm14.7-9.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9 4.9 2.2 4.9 4.9-2.2 4.9-4.9 4.9z"/>
+                </svg>
+            </div>
 
-            <div class="tech-icon" title="Node.js">
-                <svg viewBox="0 0 128 128">
-                    <path fill="#539E43" d="M64 12.8L17.8 39.5v53.3L64 119.5l46.2-26.7V39.5L64 12.8zm27.8 61c-1.3 3.9-3.8 6.9-7.3 9-3.6 2.1-7.8 3.1-12.6 3.1-4.7 0-9.1-1-13.1-3-4-2-7.2-4.9-9.5-8.8-2.3-3.9-3.5-8.5-3.5-13.8 0-5.3 1.2-9.9 3.5-13.8 2.3-3.9 5.5-6.8 9.5-8.8 4-2 8.4-3 13.1-3 5.4 0 10.1 1.3 14 3.9 3.9 2.6 6.6 6.3 8.1 11h-9.5c-1.2-2.3-2.9-4-5.1-5.3-2.2-1.3-4.7-1.9-7.5-1.9-3.2 0-6.1.8-8.6 2.3-2.5 1.5-4.5 3.7-5.9 6.5-1.4 2.8-2.1 6.1-2.1 9.8 0 3.7.7 7 2.1 9.8 1.4 2.8 3.4 5 5.9 6.5 2.5 1.5 5.4 2.3 8.6 2.3 3 0 5.6-.7 8-2.1 2.3-1.4 4.1-3.3 5.3-5.8h8.5z"/>
-                </svg>
-            </div>
-        </div>
-    </div>
+            <!-- Node.js Logo -->
+            <div class="tech-icon" title="Node.js">
+                <svg viewBox="0 0 128 128">
+                    <path fill="#539E43" d="M64 12.8L17.8 39.5v53.3L64 119.5l46.2-26.7V39.5L64 12.8zm27.8 61c-1.3 3.9-3.8 6.9-7.3 9-3.6 2.1-7.8 3.1-12.6 3.1-4.7 0-9.1-1-13.1-3-4-2-7.2-4.9-9.5-8.8-2.3-3.9-3.5-8.5-3.5-13.8 0-5.3 1.2-9.9 3.5-13.8 2.3-3.9 5.5-6.8 9.5-8.8 4-2 8.4-3 13.1-3 5.4 0 10.1 1.3 14 3.9 3.9 2.6 6.6 6.3 8.1 11h-9.5c-1.2-2.3-2.9-4-5.1-5.3-2.2-1.3-4.7-1.9-7.5-1.9-3.2 0-6.1.8-8.6 2.3-2.5 1.5-4.5 3.7-5.9 6.5-1.4 2.8-2.1 6.1-2.1 9.8 0 3.7.7 7 2.1 9.8 1.4 2.8 3.4 5 5.9 6.5 2.5 1.5 5.4 2.3 8.6 2.3 3 0 5.6-.7 8-2.1 2.3-1.4 4.1-3.3 5.3-5.8h8.5z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
 
-    /* ==========================================
-       1. CẬP NHẬT TRẠNG THÁI ONLINE / OFFLINE
-    ========================================== */
-    function updateOnlineStatus() {
-        const statusDot = document.getElementById("status-dot");
-        const statusText = document.getElementById("status-text");
-        const statusBadge = document.getElementById("status-badge");
+/* ==========================================
+   TỰ ĐỘNG CẬP NHẬT TRẠNG THÁI ONLINE / OFFLINE
+========================================== */
 
-        if (!statusDot || !statusText || !statusBadge) return;
+function updateOnlineStatus() {
+    const statusDot = document.getElementById("status-dot");
+    const statusText = document.getElementById("status-text");
+    const statusBadge = document.getElementById("status-badge");
 
-        if (navigator.onLine) {
-            statusText.textContent = "online";
-            statusDot.classList.remove("offline");
-            statusBadge.classList.remove("offline-text");
-        } else {
-            statusText.textContent = "offline";
-            statusDot.classList.add("offline");
-            statusBadge.classList.add("offline-text");
-        }
-    }
+    if (navigator.onLine) {
+        statusText.textContent = "online";
+        statusDot.classList.remove("offline");
+        statusBadge.classList.remove("offline-text");
+    } else {
+        statusText.textContent = "offline";
+        statusDot.classList.add("offline");
+        statusBadge.classList.add("offline-text");
+    }
+}
 
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
-    updateOnlineStatus();
+window.addEventListener("online", updateOnlineStatus);
+window.addEventListener("offline", updateOnlineStatus);
+updateOnlineStatus();
 
-    /* ==========================================
-       2. ĐỒNG HỒ (CLOCK)
-    ========================================== */
-    function updateClock() {
-        const clockEl = document.getElementById("clock");
-        if (!clockEl) return;
+/* ==========================================
+   CLOCK
+========================================== */
 
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const seconds = String(now.getSeconds()).padStart(2, "0");
-        const ampm = hours >= 12 ? "PM" : "AM";
+function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
 
-        hours = hours % 12 || 12;
-        hours = String(hours).padStart(2, "0");
+    hours = hours % 12 || 12;
+    hours = String(hours).padStart(2, "0");
 
-        clockEl.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
-    }
+    document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
 
-    updateClock();
-    setInterval(updateClock, 1000);
+updateClock();
+setInterval(updateClock, 1000);
 
-    /* ==========================================
-       3. TRÌNH PHÁT NHẠC (CHÍNH XÁC THEO FILE GITHUB)
-    ========================================== */
-    const songs = [
-        "Tien Tien - My Everything.flac",
-        "bob$ - Ít Bạn Ít Nạn.flac"
-    ];
+/* ==========================================
+   MUSIC PLAYER (HỖ TRỢ FILE .FLAC)
+========================================== */
 
-    let currentSong = 0;
+// Danh sách các file nhạc FLAC của bạn trên GitHub
+const songs = [
+    "Tien Tien - My Everything.flac",
+    "bob$ - Ít Bạn Ít Nạn.flac"
+];
 
-    const audio = document.getElementById("audio-player");
-    const playButton = document.getElementById("play-button");
-    const prevButton = document.getElementById("prev-button");
-    const nextButton = document.getElementById("next-button");
-    const songName = document.getElementById("song-name");
-    const progress = document.getElementById("progress");
-    const currentTimeText = document.getElementById("current-time");
-    const durationText = document.getElementById("duration");
-    const equalizer = document.getElementById("equalizer");
+let currentSong = 0;
 
-    function loadSong(index) {
-        currentSong = index;
-        const songFile = songs[currentSong];
+const audio = document.getElementById("audio-player");
+const playButton = document.getElementById("play-button");
+const prevButton = document.getElementById("prev-button");
+const nextButton = document.getElementById("next-button");
+const songName = document.getElementById("song-name");
+const progress = document.getElementById("progress");
+const currentTimeText = document.getElementById("current-time");
+const durationText = document.getElementById("duration");
 
-        // Tự động encodeURI để GitHub Pages nhận diện được khoảng trắng, ký tự $ và tiếng Việt
-        audio.src = encodeURI(songFile);
+function loadSong(index) {
+    currentSong = index;
+    const songFile = songs[currentSong];
+    audio.src = songFile;
 
-        // Hiển thị tên bài hát đẹp mắt
-        const displayName = songFile.split('/').pop().replace(/\.[^/.]+$/, "");
-        songName.textContent = displayName;
+    // Tự động loại bỏ phần mở rộng dạng tập tin (.flac, .mp3, v.v.) để lấy tên bài hát sạch
+    const displayName = songFile.split('/').pop().replace(/\.[^/.]+$/, "");
+    songName.textContent = displayName;
 
-        progress.value = 0;
-        currentTimeText.textContent = "0:00";
-        durationText.textContent = "0:00";
-        
-        audio.load();
-    }
+    audio.load();
+    progress.value = 0;
+    currentTimeText.textContent = "0:00";
+    durationText.textContent = "0:00";
+}
 
-    function playSong() {
-        audio.play().then(() => {
-            if (playButton) {
-                playBut
+function playSong() {
+    audio.play().then(() => {
+        playButton.textContent = "⏸";
+    }).catch(error => {
+        console.log("Không thể tự động phát nhạc do chính sách trình duyệt:", error);
+    });
+}
+
+function pauseSong() {
+    audio.pause();
+    playButton.textContent = "▶";
+}
+
+playButton.addEventListener("click", function() {
+    if (audio.paused) {
+        playSong();
+    } else {
+        pauseSong();
+    }
+});
+
+nextButton.addEventListener("click", function() {
+    currentSong++;
+    if (currentSong >= songs.length) {
+        currentSong = 0;
+    }
+    loadSong(currentSong);
+    playSong();
+});
+
+prevButton.addEventListener("click", function() {
+    if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+        return;
+    }
+    currentSong--;
+    if (currentSong < 0) {
+        currentSong = songs.length - 1;
+    }
+    loadSong(currentSong);
+    playSong();
+});
+
+audio.addEventListener("ended", function() {
+    currentSong++;
+    if (currentSong >= songs.length) {
+        currentSong = 0;
+    }
+    loadSong(currentSong);
+    playSong();
+});
+
+audio.addEventListener("timeupdate", function() {
+    if (!audio.duration) return;
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progress.value = percent;
+    currentTimeText.textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener("loadedmetadata", function() {
+    durationText.textContent = formatTime(audio.duration);
+});
+
+progress.addEventListener("input", function() {
+    if (!audio.duration) return;
+    audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
+function formatTime(seconds) {
+    if (!seconds || isNaN(seconds)) return "0:00";
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${secs}`;
+}
+
+// Tải bài hát đầu tiên khi mở trang
+loadSong(0);
+
+</script>
+</body>
+</html>
