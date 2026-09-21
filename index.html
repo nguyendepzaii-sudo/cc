@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,53 +7,36 @@
     <meta name="color-scheme" content="dark">
     <title>spekco | Profile</title>
 
-    <!-- Font: Fredoka (tên, đồng hồ) + Be Vietnam Pro (nội dung, hỗ trợ đầy đủ dấu tiếng Việt) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Fredoka:wght@400;500;600&display=swap">
-
-    <!-- File CSS riêng -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <main class="container">
-
-        <!-- PROFILE -->
         <section class="card profile-card">
-            <p class="speech-bubble">
-                💤💤
-            </p>
-
-            <!-- Nếu không có avatar.jpg, tự hiện chữ cái đầu thay thế -->
+            <p class="speech-bubble">💤💤</p>
             <div class="avatar-wrapper">
-                <img
-                    src="avatar.jpg"
-                    alt="spekco's avatar"
-                    class="avatar"
-                    width="92"
-                    height="92"
-                    decoding="async"
-                    onerror="this.parentElement.classList.add('no-image')">
+                <img src="avatar.jpg" alt="spekco's avatar" class="avatar" width="92" height="92" decoding="async" onerror="this.parentElement.classList.add('no-image')">
                 <span class="avatar-initial" aria-hidden="true">s</span>
             </div>
-
             <h1 class="username">spekco</h1>
-
-            <!-- Đổi sang offline: thêm class "offline-text" vào status-badge,
-                 thêm class "offline" vào status-dot và đổi chữ thành "offline" -->
             <div class="status-badge" id="status-badge">
                 <span class="status-dot" id="status-dot" aria-hidden="true"></span>
                 <span id="status-text">online</span>
             </div>
         </section>
 
-        <!-- STATUS -->
         <section class="card status-card">
             <p>“gg”</p>
         </section>
 
-        <!-- MUSIC PLAYER -->
+        <section class="card profile-actions" aria-label="Profile actions">
+            <button class="profile-action" id="copy-button" type="button">🔗 Copy link</button>
+            <button class="profile-action" id="share-button" type="button">📤 Chia sẻ</button>
+            <button class="profile-action" id="theme-button" type="button">☀️ Sáng</button>
+        </section>
+
         <section class="card music-card" aria-label="Music player">
             <div class="music-head">
                 <div class="music-label">
@@ -62,66 +45,31 @@
                 </div>
                 <span class="clock" id="clock">--:--:--</span>
             </div>
-
             <div class="track">
                 <div class="song-title" id="song-name">Loading…</div>
                 <div class="song-artist" id="song-artist"></div>
             </div>
-
             <div class="progress-container">
-                <input
-                    id="progress"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="0"
-                    step="any"
-                    aria-label="Seek"
-                    disabled>
-
-                <div class="time-row">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">0:00</span>
-                </div>
+                <input id="progress" type="range" min="0" max="100" value="0" step="any" aria-label="Seek" disabled>
+                <div class="time-row"><span id="current-time">0:00</span><span id="duration">0:00</span></div>
             </div>
-
             <div class="controls">
                 <button class="music-button" id="prev-button" type="button" aria-label="Previous track">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M6 5.5h2v13H6z"/>
-                        <path d="M19 6v12l-9.5-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 5.5h2v13H6z"/><path d="M19 6v12l-9.5-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
                 </button>
-
                 <button class="music-button play-button" id="play-button" type="button" aria-label="Play">
-                    <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M8 5.5v13l11-6.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                    </svg>
-                    <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <rect x="6.5" y="5" width="4" height="14" rx="1.3"/>
-                        <rect x="13.5" y="5" width="4" height="14" rx="1.3"/>
-                    </svg>
+                    <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="5" width="4" height="14" rx="1.3"/><rect x="13.5" y="5" width="4" height="14" rx="1.3"/></svg>
                 </button>
-
                 <button class="music-button" id="next-button" type="button" aria-label="Next track">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M16 5.5h2v13h-2z"/>
-                        <path d="M5 6v12l9.5-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 5.5h2v13h-2z"/><path d="M5 6v12l9.5-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
                 </button>
             </div>
-
             <audio id="audio-player" preload="metadata"></audio>
         </section>
-                    </svg>
-                </li>
-
-            </ul>
-        </section>
-
     </main>
 
-    <!-- File JavaScript riêng -->
+    <script src="profile-features.js"></script>
     <script src="music.js"></script>
 </body>
 </html>
