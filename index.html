@@ -2,1400 +2,545 @@
 <html lang="vi">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no">
-
-<title>spekco | Profile</title>
-
-
-<style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
-}
-
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-
-    overflow-x: hidden;
-}
-
-
-body {
-    min-height: 100vh;
-
-    color: #fff;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            #251034 0%,
-            #10071b 45%,
-            #08040e 100%
-        );
-
-    isolation: isolate;
-}
-
-
-/* =========================================================
-   LIQUID BACKGROUND
-========================================================= */
-
-.liquid-bg {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: -3;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    filter: blur(35px);
-}
-
-
-.liquid-orb {
-
-    position: absolute;
-
-    width: 230px;
-    height: 230px;
-
-    border-radius: 50%;
-
-    opacity: .45;
-
-    filter: blur(15px);
-
-    will-change: transform;
-
-    animation:
-        liquidMove 14s ease-in-out infinite alternate;
-}
-
-
-/* Pink */
-
-.orb-1 {
-
-    top: 5%;
-    left: -70px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,91,197,.65),
-            rgba(255,91,197,0)
-        );
-
-    animation-duration: 17s;
-}
-
-
-/* Purple */
-
-.orb-2 {
-
-    top: 28%;
-    right: -90px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(133,91,255,.65),
-            rgba(133,91,255,0)
-        );
-
-    animation-duration: 20s;
-
-    animation-delay: -4s;
-}
-
-
-/* Blue */
-
-.orb-3 {
-
-    top: 58%;
-    left: -100px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(74,111,255,.45),
-            rgba(74,111,255,0)
-        );
-
-    animation-duration: 22s;
-
-    animation-delay: -7s;
-}
-
-
-/* Pink */
-
-.orb-4 {
-
-    bottom: -80px;
-    right: -60px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,80,180,.45),
-            rgba(255,80,180,0)
-        );
-
-    animation-duration: 18s;
-
-    animation-delay: -3s;
-}
-
-
-@keyframes liquidMove {
-
-    0% {
-
-        transform:
-            translate3d(0,0,0)
-            scale(1);
-    }
-
-    30% {
-
-        transform:
-            translate3d(55px,-35px,0)
-            scale(1.12);
-    }
-
-    60% {
-
-        transform:
-            translate3d(-30px,60px,0)
-            scale(.92);
-    }
-
-    100% {
-
-        transform:
-            translate3d(45px,20px,0)
-            scale(1.08);
-    }
-}
-
-
-/* =========================================================
-   GLASS NOISE
-========================================================= */
-
-.glass-noise {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: -1;
-
-    pointer-events: none;
-
-    opacity: .025;
-
-    background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-}
-
-
-/* =========================================================
-   LAYOUT
-========================================================= */
-
-.container {
-
-    width:
-        calc(100% - 24px);
-
-    max-width: 390px;
-
-    margin:
-        20px auto;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 14px;
-}
-
-
-/* =========================================================
-   GLASS CARD
-========================================================= */
-
-.card {
-
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 18px;
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.14);
-
-    backdrop-filter:
-        blur(24px)
-        saturate(145%);
-
-    -webkit-backdrop-filter:
-        blur(24px)
-        saturate(145%);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.12),
-        inset 0 -1px 0 rgba(255,255,255,.025),
-        0 15px 45px rgba(0,0,0,.28);
-
-    transition:
-        transform .35s cubic-bezier(.2,.8,.2,1),
-        border-color .35s ease,
-        box-shadow .35s ease;
-}
-
-
-/* Glass reflection */
-
-.card::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: -100%;
-    left: -50%;
-
-    width: 200%;
-    height: 200%;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            115deg,
-            transparent 35%,
-            rgba(255,255,255,.055) 45%,
-            rgba(255,255,255,.11) 50%,
-            rgba(255,255,255,.055) 55%,
-            transparent 65%
-        );
-
-    transform:
-        translateX(-60%)
-        rotate(8deg);
-
-    opacity: .45;
-
-    animation:
-        glassReflection 9s ease-in-out infinite;
-}
-
-
-@keyframes glassReflection {
-
-    0%,
-    100% {
-
-        transform:
-            translateX(-65%)
-            rotate(8deg);
-    }
-
-    50% {
-
-        transform:
-            translateX(65%)
-            rotate(8deg);
-    }
-}
-
-
-/* Edge light */
-
-.card::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at
-            var(--light-x,50%)
-            var(--light-y,0%),
-            rgba(255,255,255,.16),
-            transparent 28%
-        );
-
-    opacity: .7;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-card {
-
-    text-align: center;
-
-    padding-top: 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,150,220,.075),
-            rgba(100,60,180,.035)
-        );
-}
-
-
-.speech-bubble {
-
-    display: inline-block;
-
-    max-width: 100%;
-
-    padding: 8px 12px;
-
-    margin-bottom: 15px;
-
-    border-radius: 14px;
-
-    background:
-        rgba(255,150,210,.13);
-
-    border:
-        1px solid rgba(255,180,220,.30);
-
-    color: #ffe5f3;
-
-    font-size: 12px;
-
-    backdrop-filter:
-        blur(15px)
-        saturate(150%);
-
-    -webkit-backdrop-filter:
-        blur(15px)
-        saturate(150%);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.12),
-        0 8px 25px rgba(0,0,0,.12);
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-.avatar-wrapper {
-
-    position: relative;
-
-    width: 92px;
-    height: 92px;
-
-    margin:
-        0 auto 12px;
-
-    padding: 3px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff9edc,
-            #a66cff,
-            #ff9edc
-        );
-
-    box-shadow:
-        0 0 25px rgba(220,100,255,.65);
-
-    animation:
-        avatarFloat 5s ease-in-out infinite;
-}
-
-
-.avatar {
-
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    border:
-        2px solid rgba(255,255,255,.8);
-}
-
-
-@keyframes avatarFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-4px);
-    }
-}
-
-
-.username {
-
-    font-size: 22px;
-
-    font-weight: 700;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   ONLINE STATUS
-========================================================= */
-
-.status-badge {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 7px;
-
-    margin-top: 6px;
-
-    color: #9cff68;
-
-    font-size: 13px;
-
-    transition: color .3s ease;
-}
-
-
-.status-dot {
-
-    width: 9px;
-    height: 9px;
-
-    border-radius: 50%;
-
-    background: #6cff3d;
-
-    box-shadow:
-        0 0 10px #6cff3d;
-
-    animation:
-        pulse 1.5s infinite;
-}
-
-
-@keyframes pulse {
-
-    0%,
-    100% {
-
-        transform: scale(1);
-
-        opacity: 1;
-    }
-
-    50% {
-
-        transform: scale(1.35);
-
-        opacity: .6;
-    }
-}
-
-
-.status-badge.offline-text {
-
-    color: #aaa;
-}
-
-
-.status-dot.offline {
-
-    background: #888;
-
-    box-shadow: none;
-
-    animation: none;
-}
-
-
-/* =========================================================
-   STATUS CARD
-========================================================= */
-
-.status-card {
-
-    text-align: center;
-
-    color: #e9dff5;
-
-    font-size: 14px;
-
-    font-style: italic;
-}
-
-
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
-
-.music-card {
-
-    text-align: center;
-
-    padding:
-        18px 18px 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,120,210,.065),
-            rgba(130,90,255,.04)
-        );
-}
-
-
-.music-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    margin-bottom: 5px;
-}
-
-
-.music-label {
-
-    color: #e08ac2;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    letter-spacing: 2.5px;
-
-    text-transform: uppercase;
-}
-
-
-.music-status {
-
-    padding: 3px 7px;
-
-    border-radius: 999px;
-
-    color:
-        rgba(255,255,255,.55);
-
-    background:
-        rgba(255,255,255,.055);
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    font-size: 8px;
-
-    font-weight: 600;
-
-    letter-spacing: .7px;
-
-    transition: .3s;
-}
-
-
-.music-status.playing {
-
-    color: #8aff72;
-
-    background:
-        rgba(100,255,80,.08);
-
-    border-color:
-        rgba(100,255,80,.16);
-}
-
-
-.music-status.error {
-
-    color: #ff8cba;
-
-    background:
-        rgba(255,80,130,.08);
-
-    border-color:
-        rgba(255,80,130,.16);
-}
-
-
-/* Clock */
-
-.clock {
-
-    margin:
-        4px 0 8px;
-
-    color: #ff8ed4;
-
-    font-size: 22px;
-
-    font-weight: 600;
-
-    letter-spacing: .3px;
-
-    text-shadow:
-        0 0 18px rgba(255,100,210,.25);
-}
-
-
-/* Song */
-
-.song-info {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    width: 100%;
-
-    margin-bottom: 16px;
-}
-
-
-.song-title {
-
-    min-width: 0;
-
-    max-width: 85%;
-
-    overflow: hidden;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-
-    color: #f1eaf3;
-
-    font-size: 14px;
-
-    font-weight: 500;
-}
-
-
-.song-number {
-
-    flex-shrink: 0;
-
-    color:
-        rgba(255,255,255,.35);
-
-    font-size: 9px;
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress-container {
-
-    width: 100%;
-}
-
-
-#progress {
-
-    width: 100%;
-
-    height: 5px;
-
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    border: 0;
-
-    outline: none;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255,255,255,.13);
-
-    cursor: pointer;
-}
-
-
-#progress::-webkit-slider-runnable-track {
-
-    height: 5px;
-
-    border-radius: 999px;
-
-    background:
-        var(--progress-bg,
-        rgba(255,255,255,.13));
-}
-
-
-#progress::-webkit-slider-thumb {
-
-    width: 14px;
-    height: 14px;
-
-    margin-top: -4.5px;
-
-    appearance: none;
-
-    -webkit-appearance: none;
-
-    border: 0;
-
-    border-radius: 50%;
-
-    background: #ff8ed4;
-
-    box-shadow:
-        0 0 10px rgba(255,100,210,.8),
-        0 0 20px rgba(255,100,210,.25);
-
-    cursor: pointer;
-
-    transition:
-        transform .15s ease;
-}
-
-
-#progress::-webkit-slider-thumb:active {
-
-    transform: scale(1.25);
-}
-
-
-#progress::-moz-range-track {
-
-    height: 5px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255,255,255,.13);
-}
-
-
-#progress::-moz-range-progress {
-
-    height: 5px;
-
-    border-radius: 999px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff87d2,
-            #9e6eff
-        );
-}
-
-
-#progress::-moz-range-thumb {
-
-    width: 14px;
-    height: 14px;
-
-    border: 0;
-
-    border-radius: 50%;
-
-    background: #ff8ed4;
-
-    box-shadow:
-        0 0 10px rgba(255,100,210,.8);
-
-    cursor: pointer;
-}
-
-
-/* Time */
-
-.time-row {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-top: 7px;
-
-    color:
-        rgba(255,255,255,.42);
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   MUSIC BUTTONS
-========================================================= */
-
-.controls {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 20px;
-
-    margin-top: 18px;
-}
-
-
-.music-button {
-
-    position: relative;
-
-    width: 46px;
-    height: 46px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    overflow: hidden;
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    border-radius: 50%;
-
-    color: #fff;
-
-    background:
-        rgba(255,255,255,.065);
-
-    backdrop-filter:
-        blur(18px)
-        saturate(150%);
-
-    -webkit-backdrop-filter:
-        blur(18px)
-        saturate(150%);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.12),
-        inset 0 -1px 0 rgba(0,0,0,.12);
-
-    font-size: 17px;
-
-    cursor: pointer;
-
-    transition:
-        transform .18s ease,
-        background .25s ease,
-        box-shadow .25s ease;
-}
-
-
-.music-button::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 70px;
-    height: 70px;
-
-    top: -48px;
-    left: -48px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.18),
-            transparent 65%
-        );
-
-    transition:
-        transform .4s ease;
-}
-
-
-.music-button:hover {
-
-    background:
-        rgba(255,255,255,.11);
-}
-
-
-.music-button:hover::before {
-
-    transform:
-        translate3d(40px,40px,0);
-}
-
-
-.music-button:active {
-
-    transform: scale(.88);
-}
-
-
-/* Main play */
-
-.play-button {
-
-    width: 58px;
-    height: 58px;
-
-    font-size: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,130,205,.58),
-            rgba(145,105,255,.58)
-        );
-
-    border:
-        1px solid rgba(255,255,255,.2);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.2),
-        0 0 25px rgba(210,100,255,.28);
-}
-
-
-/* Playing glow */
-
-.music-card.is-playing
-.play-button {
-
-    animation:
-        musicGlow 2.2s ease-in-out infinite;
-}
-
-
-@keyframes musicGlow {
-
-    0%,
-    100% {
-
-        box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.2),
-            0 0 20px rgba(210,100,255,.22);
-    }
-
-    50% {
-
-        box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.2),
-            0 0 32px rgba(210,100,255,.45);
-    }
-}
-
-
-/* =========================================================
-   TECH STACK
-========================================================= */
-
-.tech-stack {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 14px;
-
-    flex-wrap: wrap;
-}
-
-
-.tech-icon {
-
-    position: relative;
-
-    width: 46px;
-    height: 46px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    overflow: hidden;
-
-    border-radius: 12px;
-
-    background:
-        rgba(255,255,255,.08);
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:
-        blur(15px)
-        saturate(140%);
-
-    -webkit-backdrop-filter:
-        blur(15px)
-        saturate(140%);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.1);
-
-    transition:
-        transform .2s ease,
-        background .2s ease;
-}
-
-
-.tech-icon:hover {
-
-    transform:
-        translateY(-2px);
-
-    background:
-        rgba(255,255,255,.15);
-}
-
-
-.tech-icon svg {
-
-    width: 28px;
-    height: 28px;
-}
-
-
-.tech-icon::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 45px;
-    height: 45px;
-
-    top: -30px;
-    left: -30px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.08);
-
-    transition:
-        transform .35s ease;
-}
-
-
-.tech-icon:hover::before {
-
-    transform:
-        translate(35px,35px);
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 420px) {
-
-    .container {
-
-        width:
-            calc(100% - 18px);
-
-        margin:
-            12px auto;
-    }
-
-
-    .card {
-
-        padding: 15px;
-    }
-
-
-    .profile-card {
-
-        padding-top: 20px;
-    }
-
-
-    .clock {
-
-        font-size: 21px;
-    }
-
-
-    .controls {
-
-        gap: 18px;
-    }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-            .01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        transition-duration:
-            .01ms !important;
-    }
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>spekco | Profile</title>
+
+    <style>
+        /* =========================================================
+           RESET
+        ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            background: radial-gradient(circle at 50% -10%, #251034 0%, #10071b 45%, #08040e 100%);
+            isolation: isolate;
+        }
+
+        /* =========================================================
+           LIQUID BACKGROUND
+        ========================================================= */
+        .liquid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+            filter: blur(35px);
+        }
+
+        .liquid-orb {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            opacity: .45;
+            filter: blur(15px);
+            will-change: transform;
+            animation: liquidMove 14s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            top: 5%;
+            left: -70px;
+            background: radial-gradient(circle, rgba(255,91,197,.65), rgba(255,91,197,0));
+            animation-duration: 17s;
+        }
+
+        .orb-2 {
+            top: 28%;
+            right: -90px;
+            background: radial-gradient(circle, rgba(133,91,255,.65), rgba(133,91,255,0));
+            animation-duration: 20s;
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            top: 58%;
+            left: -100px;
+            background: radial-gradient(circle, rgba(74,111,255,.45), rgba(74,111,255,0));
+            animation-duration: 22s;
+            animation-delay: -7s;
+        }
+
+        .orb-4 {
+            bottom: -80px;
+            right: -60px;
+            background: radial-gradient(circle, rgba(255,80,180,.45), rgba(255,80,180,0));
+            animation-duration: 18s;
+            animation-delay: -3s;
+        }
+
+        @keyframes liquidMove {
+            0% { transform: translate3d(0,0,0) scale(1); }
+            30% { transform: translate3d(55px,-35px,0) scale(1.12); }
+            60% { transform: translate3d(-30px,60px,0) scale(.92); }
+            100% { transform: translate3d(45px,20px,0) scale(1.08); }
+        }
+
+        /* =========================================================
+           GLASS NOISE
+        ========================================================= */
+        .glass-noise {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: .025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+        }
+
+        /* =========================================================
+           LAYOUT & GLASS CARD
+        ========================================================= */
+        .container {
+            width: calc(100% - 24px);
+            max-width: 390px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            padding: 18px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+            border: 1px solid rgba(255,255,255,.14);
+            backdrop-filter: blur(24px) saturate(145%);
+            -webkit-backdrop-filter: blur(24px) saturate(145%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(255,255,255,.025), 0 15px 45px rgba(0,0,0,.28);
+            transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
+        }
+
+        /* Profile */
+        .profile-card {
+            text-align: center;
+            padding-top: 22px;
+            background: linear-gradient(135deg, rgba(255,150,220,.075), rgba(100,60,180,.035));
+        }
+
+        .speech-bubble {
+            display: inline-block;
+            max-width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            border-radius: 14px;
+            background: rgba(255,150,210,.13);
+            border: 1px solid rgba(255,180,220,.30);
+            color: #ffe5f3;
+            font-size: 12px;
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 8px 25px rgba(0,0,0,.12);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 92px;
+            height: 92px;
+            margin: 0 auto 12px;
+            padding: 3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9edc, #a66cff, #ff9edc);
+            box-shadow: 0 0 25px rgba(220,100,255,.65);
+            animation: avatarFloat 5s ease-in-out infinite;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,.8);
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .username {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Status Online/Offline */
+        .status-badge {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            margin-top: 6px;
+            color: #9cff68;
+            font-size: 13px;
+            transition: color .3s ease;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #6cff3d;
+            box-shadow: 0 0 10px #6cff3d;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.35); opacity: .6; }
+        }
+
+        .status-badge.offline-text { color: #aaa; }
+        .status-dot.offline { background: #888; box-shadow: none; animation: none; }
+
+        .status-card {
+            text-align: center;
+            color: #e9dff5;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* =========================================================
+           MUSIC PLAYER
+        ========================================================= */
+        .music-card {
+            text-align: center;
+            padding: 18px 18px 20px;
+            background: linear-gradient(135deg, rgba(255,120,210,.065), rgba(130,90,255,.04));
+        }
+
+        .music-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .music-label {
+            color: #e08ac2;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .music-status {
+            padding: 3px 7px;
+            border-radius: 999px;
+            color: rgba(255,255,255,.55);
+            background: rgba(255,255,255,.055);
+            border: 1px solid rgba(255,255,255,.08);
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: .7px;
+            transition: .3s;
+        }
+
+        .music-status.playing {
+            color: #8aff72;
+            background: rgba(100,255,80,.08);
+            border-color: rgba(100,255,80,.16);
+        }
+
+        .clock {
+            margin: 4px 0 8px;
+            color: #ff8ed4;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            text-shadow: 0 0 18px rgba(255,100,210,.25);
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .song-title {
+            min-width: 0;
+            max-width: 80%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #f1eaf3;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .song-number {
+            flex-shrink: 0;
+            color: rgba(255,255,255,.35);
+            font-size: 10px;
+        }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; }
+
+        #progress {
+            width: 100%;
+            height: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 0;
+            outline: none;
+            border-radius: 999px;
+            background: rgba(255,255,255,.13);
+            cursor: pointer;
+        }
+
+        #progress::-webkit-slider-thumb {
+            width: 14px;
+            height: 14px;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 0;
+            border-radius: 50%;
+            background: #ff8ed4;
+            box-shadow: 0 0 10px rgba(255,100,210,.8);
+            cursor: pointer;
+            transition: transform .15s ease;
+        }
+
+        #progress::-webkit-slider-thumb:active { transform: scale(1.25); }
+
+        .time-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 7px;
+            color: rgba(255,255,255,.42);
+            font-size: 10px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .music-button {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+            color: #fff;
+            background: rgba(255,255,255,.065);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            font-size: 17px;
+            cursor: pointer;
+            transition: transform .18s ease, background .25s ease;
+        }
+
+        .music-button:hover { background: rgba(255,255,255,.11); }
+        .music-button:active { transform: scale(.88); }
+
+        .play-button {
+            width: 58px;
+            height: 58px;
+            font-size: 20px;
+            background: linear-gradient(135deg, rgba(255,130,205,.58), rgba(145,105,255,.58));
+            border: 1px solid rgba(255,255,255,.2);
+            box-shadow: 0 0 25px rgba(210,100,255,.28);
+        }
+
+        .music-card.is-playing .play-button {
+            animation: musicGlow 2.2s ease-in-out infinite;
+        }
+
+        @keyframes musicGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(210,100,255,.22); }
+            50% { box-shadow: 0 0 32px rgba(210,100,255,.45); }
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tech-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.12);
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .tech-icon:hover { transform: translateY(-2px); background: rgba(255,255,255,.15); }
+        .tech-icon svg { width: 28px; height: 28px; }
+
+        @media (max-width: 420px) {
+            .container { width: calc(100% - 18px); margin: 12px auto; }
+            .card { padding: 15px; }
+            .clock { font-size: 21px; }
+            .controls { gap: 16px; }
+        }
+    </style>
 </head>
-
 
 <body>
 
+    <!-- LIQUID BACKGROUND -->
+    <div class="liquid-bg">
+        <div class="liquid-orb orb-1"></div>
+        <div class="liquid-orb orb-2"></div>
+        <div class="liquid-orb orb-3"></div>
+        <div class="liquid-orb orb-4"></div>
+    </div>
 
-<!-- =========================================================
-     LIQUID BACKGROUND
-========================================================= -->
+    <div class="glass-noise"></div>
 
-<div class="liquid-bg">
+    <!-- MAIN CONTAINER -->
+    <main class="container">
 
-    <div class="liquid-orb orb-1"></div>
-
-    <div class="liquid-orb orb-2"></div>
-
-    <div class="liquid-orb orb-3"></div>
-
-    <div class="liquid-orb orb-4"></div>
-
-</div>
-
-
-<div class="glass-noise"></div>
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
-<main class="container">
-
-
-    <!-- =====================================================
-         PROFILE
-    ====================================================== -->
-
-    <section class="card profile-card">
-
-        <div class="speech-bubble">
-            i wanna be cute like u lemme feel your molecules
-        </div>
-
-
-        <div class="avatar-wrapper">
-
-            <img
-                src="avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-                onerror="this.style.display='none';"
-            >
-
-        </div>
-
-
-        <h1 class="username">
-            spekco
-        </h1>
-
-
-        <div
-            class="status-badge"
-            id="status-badge"
-        >
-
-            <span
-                class="status-dot"
-                id="status-dot"
-            ></span>
-
-            <span id="status-text">
-                online
-            </span>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         STATUS
-    ====================================================== -->
-
-    <section class="card status-card">
-
-        "I'm not currently doing anything!"
-
-    </section>
-
-
-    <!-- =====================================================
-         MUSIC PLAYER
-    ====================================================== -->
-
-    <section class="card music-card">
-
-
-        <div class="music-header">
-
-            <span class="music-label">
-                NOW PLAYING
-            </span>
-
-            <span
-                class="music-status"
-                id="music-status"
-            >
-                READY
-            </span>
-
-        </div>
-
-
-        <div
-            class="clock"
-            id="clock"
-        >
-            00:00:00 AM
-        </div>
-
-
-        <div class="song-info">
-
-            <div
-                class="song-title"
-                id="song-name"
-            >
-                Loading...
+        <!-- PROFILE CARD -->
+        <section class="card profile-card">
+            <div class="speech-bubble">
+                i wanna be cute like u lemme feel your molecules
             </div>
 
-            <div
-                class="song-number"
-                id="song-number"
-            >
-                1 / 1
+            <div class="avatar-wrapper">
+                <img src="avatar.jpg" alt="Avatar" class="avatar" onerror="this.style.display='none';">
             </div>
 
-        </div>
+            <h1 class="username">spekco</h1>
 
+            <div class="status-badge" id="status-badge">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">online</span>
+            </div>
+        </section>
 
-        <div class="progress-container">
+        <!-- STATUS CARD -->
+        <section class="card status-card">
+            "I'm not currently doing anything!"
+        </section>
 
-            <input
-                id="progress"
-                type="range"
-                min="0"
-                max="100"
-                value="0"
-                step="0.01"
-                aria-label="Music progress"
-            >
+        <!-- MUSIC PLAYER CARD -->
+        <section class="card music-card" id="music-card">
+            <div class="music-header">
+                <span class="music-label">NOW PLAYING</span>
+                <span class="music-status" id="music-status">READY</span>
+            </div>
 
+            <div class="clock" id="clock">00:00:00 AM</div>
 
-            <div class="time-row">
+            <div class="song-info">
+                <div class="song-title" id="song-name">Loading...</div>
+                <div class="song-number" id="song-number">1 / 1</div>
+            </div>
 
-                <span id="current-time">
-                    0:00
-              
+            <div class="progress-container">
+                <input id="progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Music progress">
+                <div class="time-row">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="music-button" id="prev-button" type="button" aria-label="Previous">⏮</button>
+                <button class="music-button play-button" id="play-button" type="button" aria-label="Play">▶</button>
+                <button class="music-button" id="next-button" type="button" aria-label="Next">⏭</button>
+            </div>
+
+            <!-- Thẻ Audio hỗ trợ file FLAC -->
+            <audio id="audio-player" preload="metadata"></audio>
+        </section>
+
+        <!-- TECH STACK -->
+        <section class="card">
+            <div class="tech-stack">
+                <!-- JS Logo -->
+                <div class="tech-icon" title="JavaScript">
+                    <svg viewBox="0 0 128 128">
+                        <rect width="128" height="128" rx="16" fill="#F7DF1E"/>
+                        <path d="M67.31 102.06c3.48 5.61 8.28 9.38 16.32 9.38 6.84 0 11.52-3.36 11.52-8.04 0-5.64-4.56-7.8-12.24-11.16l-4.2-1.8c-12.24-5.16-20.28-11.52-20.28-25.08 0-12.36 9.6-21.72 24.84-21.72 10.92 0 18.96 3.96 24.36 13.44l-11.52 7.44c-3.12-5.4-6.48-7.32-12.48-7.32-4.56 0-7.8 2.88-7.8 6.48 0 4.68 3.12 6.72 10.32 9.84l4.2 1.8c14.76 6.36 22.32 12.36 22.32 26.28 0 14.88-11.64 22.92-28.56 22.92-15.6 0-25.08-7.56-29.88-16.92l13.08-7.56zM24.71 102.06c3.12 5.28 7.32 9.12 14.28 9.12 6.12 0 10.2-2.4 10.2-11.76V44.4h15.6v55.32c0 17.52-10.2 24.96-25.2 24.96-12.24 0-20.76-6.12-25.8-15.36l10.92-7.26z" fill="#000000"/>
+                    </svg>
+                </div>
+                <!-- HTML5 Logo -->
+                <div class="tech-icon" title="HTML5">
+                    <svg viewBox="0 0 128 128">
+                        <path fill="#E44D26" d="M18.8 11.2l9.1 102.2 36.1 10 36.1-10 9.1-102.2H18.8z"/>
+                        <path fill="#F16529" d="M64 121.2l30.2-8.4 7.8-87.3H64v95.7z"/>
+                        <path fill="#EBEBEB" d="M64 54.1H48.4l-1.1-12.3H64V29.5H33.5l3.4 37H64v-12.4zm0 33.6l-13.7-3.7-.9-9.8H36.9l1.7 19.5 25.4 7V87.7z"/>
+                        <path fill="#FFFFFF" d="M64 54.1v12.4h14.5l-1.4 15.3-13.1 3.5v12.2l25.3-7 2.5-28.1c.2-2.1.2-3.8.2-5.9l.1-2.4H64zm0-24.6v12.3h31.8l1.1-12.3H64z"/>
+                    </svg>
+                </div>
+                <!-- Python Logo -->
+                <div class="tech-icon" title="Python">
+                    <svg viewBox="0 0 128 128">
+                        <linearGradient id="py-a" x1="13.2" y1="12.5" x2="68.2" y2="70.2" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#387EB8"/>
+                            <stop offset="1" stop-color="#366994"/>
+                        </linearGradient>
+                        <linearGradient id="py-b" x1="59.8" y1="58.2" x2="114.8" y2="115.8" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#FFE052"/>
+                            <stop offset="1" stop-color="#FFC321"/>
+                        </linearGradient>
+                        <path fill="url(#py-a)" d="M63.1 11c-28.6 0-26.9 12.4-26.9 12.4l.1 12.8h27.4v3.9H25.3S11 38.5 11 67.4c0 28.9 12.5 27.8 12.5 27.8h7.5V82.8s-.4-14.8 14.5-14.8h25.1s13.8.2 13.8-13.3V25.2S86.2 11 63.1 11zm-14.7 9.1c2.7 0 4.9 2.2 4.9 4.9s-2.2 4.9-4.9 4.9-4.9-2.2-4.9-4.9 2.2-4.9 4.9-4.9z"/>
+                        <path fill="url(#py-b)" d="M64.9 117c28.6 0 26.9-12.4 26.9-12.4l-.1-12.8H64.3v-3.9h38.4s14.3 1.6 14.3-27.3c0-28.9-12.5-27.8-12.5-27.8h-7.5v12.4s.4 14.8-14.5 14.8H67.4s-13.8-.2-13.8 13.3v29.5s-1.8 14.2 21.3 14.2zm14.7-9.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9 4.9 2.2 4.9 4.9-2.2 4.9-4.9 4.9z"/>
+                    </svg>
+                </div>
+                <!-- Node.js Logo -->
+                <div class="tech-icon" title="Node.js">
+                    <svg viewBox="0 0 128 128">
+                        <path fill="#539E43" d="M64 12.8L17.8 39.5v53.3L64 119.5l46.2-26.7V39.5L64 12.8zm27.8 61c-1.3 3.9-3.8 6.9-7.3 9-3.6 2.1-7.8 3.1-12.6 3.1-4.7 0-9.1-1-13.1-3-4-2-7.2-4.9-9.5-8.8-2.3-3.9-3.5-8.5-3.5-13.8 0-5.3 1.2-9.9 3.5-13.8 2.3-3.9 5.5-6.8 9.5-8.8 4-2 8.4-3 13.1-3 5.4 0 10.1 1.3 14 3.9 3.9 2.6 6.6 6.3 8.1 11h-9.5c-1.2-2.3-2.9-4-5.1-5.3-2.2-1.3-4.7-1.9-7.5-1.9-3.2 0-6.1.8-8.6 2.3-2.5 1.5-4.5 3.7-5.9 6.5-1.4 2.8-2.1 6.1-2.1 9.8 0 3.7.7 7 2.1 9.8 1.4 2.8 3.4 5 5.9 6.5 2.5 1.5 5.4 2.3 8.6 2.3 3 0 5.6-.7 8-2.1 2.3-1.4 4.1-3.3 5.3-5.8h8.5z"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /* ==========================================
+           TRẠNG THÁI ONLINE / OFFLINE
+        ========================================== */
+        function updateOnlineStatus() {
+            const statusDot = document.getElementById("status-dot");
+            const statusText = document.getElementById("status-text");
+            const statusBadge = document.getElementById("status-badge");
+
+            if (navigator.onLine) {
+                statusText.textContent = "online";
+                statusDot.classList.remove("offline");
+                statusBadge.classList.remove("offline-text");
+            } else {
+                statusText.t
