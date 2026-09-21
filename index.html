@@ -34,6 +34,42 @@ body {
     overflow-x: hidden;
     color: white;
     background-color: #0f051d;
+    position: relative;
+    z-index: 1;
+}
+
+/* Tạo các khối màu chuyển động phía sau để kính làm mờ (Glassmorphism) */
+body::before, body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: -1;
+    animation: floatBg 10s infinite alternate ease-in-out;
+}
+
+body::before {
+    width: 350px;
+    height: 350px;
+    background: #9664ff;
+    top: -10%;
+    left: -20%;
+    opacity: 0.55;
+}
+
+body::after {
+    width: 300px;
+    height: 300px;
+    background: #ff78c8;
+    bottom: -10%;
+    right: -20%;
+    opacity: 0.45;
+    animation-delay: -5s;
+}
+
+@keyframes floatBg {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 50px) scale(1.15); }
 }
 
 /* =========================
@@ -57,13 +93,14 @@ body {
     width: 100%;
     padding: 18px;
     border-radius: 22px;
-    background: rgba(20, 10, 35, 0.48);
-    border: 1px solid rgba(255,255,255,0.18);
+    /* Tối ưu hiệu ứng kính mờ chân thực */
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow:
-        0 8px 35px rgba(0,0,0,0.35),
-        inset 0 0 20px rgba(255,255,255,0.03);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+        0 8px 32px 0 rgba(0, 0, 0, 0.35),
+        inset 0 1px 2px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
 /* =========================
@@ -81,10 +118,12 @@ body {
     padding: 8px 12px;
     margin-bottom: 15px;
     border-radius: 14px;
-    background: rgba(255, 150, 210, 0.18);
-    border: 1px solid rgba(255, 180, 220, 0.35);
+    background: rgba(255, 150, 210, 0.12);
+    border: 1px solid rgba(255, 180, 220, 0.25);
     color: #ffe5f3;
     font-size: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 /* =========================
@@ -195,6 +234,7 @@ body {
     color: #ff8fd2;
     letter-spacing: 1px;
     margin-bottom: 8px;
+    text-shadow: 0 0 15px rgba(255,143,210,0.3);
 }
 
 .song-title {
@@ -221,7 +261,7 @@ body {
     appearance: none;
     -webkit-appearance: none;
     border-radius: 10px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.15);
     outline: none;
 }
 
@@ -233,6 +273,7 @@ body {
     border-radius: 50%;
     background: #ff8fd2;
     box-shadow: 0 0 10px rgba(255,100,210,0.8);
+    cursor: pointer;
 }
 
 .time-row {
@@ -264,24 +305,31 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
-    background: rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     font-size: 17px;
     cursor: pointer;
     transition: 0.2s;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.music-button:hover {
+    background: rgba(255,255,255,0.12);
 }
 
 .music-button:active {
     transform: scale(0.88);
-    background: rgba(255,150,220,0.3);
+    background: rgba(255,150,220,0.25);
 }
 
 .play-button {
     width: 56px;
     height: 56px;
     font-size: 21px;
-    background: linear-gradient(135deg, rgba(255,120,200,0.65), rgba(150,100,255,0.65));
+    background: linear-gradient(135deg, rgba(255,120,200,0.45), rgba(150,100,255,0.45));
     box-shadow: 0 0 20px rgba(220,100,255,0.35);
+    border: 1px solid rgba(255,255,255,0.25);
 }
 
 /* =========================
@@ -312,14 +360,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
     transition: transform 0.2s ease, background 0.2s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .tech-icon:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .tech-icon svg {
@@ -526,9 +576,8 @@ setInterval(updateClock, 1000);
 
 // Danh sách các file nhạc FLAC của bạn trên GitHub
 const songs = [
-    "Tien Tien - My Everything.flac",
-    "bob$ - Ít Bạn Ít Nạn.flac",
-    "music.flac"
+    "music1.flac",
+    "music2.flac"
 ];
 
 let currentSong = 0;
