@@ -33,7 +33,7 @@ body {
     width: 100%;
     overflow-x: hidden;
     color: white;
-    background-color: #0f051d; /* Màu nền tối tĩnh đơn giản */
+    background-color: #0f051d;
 }
 
 /* =========================
@@ -399,7 +399,7 @@ body {
         </div>
 
         <div class="song-title" id="song-name">
-            music2.mp3
+            Loading...
         </div>
 
         <div class="progress-container">
@@ -426,11 +426,8 @@ body {
         <audio id="audio-player" preload="metadata"></audio>
     </div>
 
-    <!--  -->
+    <!-- TECH STACK -->
     <div class="card">
-        <div class="tech-title">
-        </div>
-
         <div class="tech-stack">
             <!-- JavaScript Logo -->
             <div class="tech-icon" title="JavaScript">
@@ -499,11 +496,8 @@ function updateOnlineStatus() {
     }
 }
 
-// Lắng nghe sự kiện thay đổi kết nối mạng
 window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
-
-// Kiểm tra ngay khi tải trang
 updateOnlineStatus();
 
 /* ==========================================
@@ -527,13 +521,13 @@ updateClock();
 setInterval(updateClock, 1000);
 
 /* ==========================================
-   MUSIC PLAYER
+   MUSIC PLAYER (HỖ TRỢ FILE .FLAC)
 ========================================== */
 
+// Danh sách các file nhạc FLAC của bạn trên GitHub
 const songs = [
-    { name: "Music 1", file: "music.mp3" },
-    { name: "Music 2", file: "music2.mp3" },
-    { name: "Music 3", file: "music3.mp3" }
+    "Tien Tien - My Everything.flac",
+    "bob$ - Ít Bạn Ít Nạn.flac"
 ];
 
 let currentSong = 0;
@@ -549,9 +543,13 @@ const durationText = document.getElementById("duration");
 
 function loadSong(index) {
     currentSong = index;
-    const song = songs[currentSong];
-    audio.src = song.file;
-    songName.textContent = song.name;
+    const songFile = songs[currentSong];
+    audio.src = songFile;
+
+    // Tự động loại bỏ phần mở rộng dạng tập tin (.flac, .mp3, v.v.) để lấy tên bài hát sạch
+    const displayName = songFile.split('/').pop().replace(/\.[^/.]+$/, "");
+    songName.textContent = displayName;
+
     audio.load();
     progress.value = 0;
     currentTimeText.textContent = "0:00";
@@ -562,7 +560,7 @@ function playSong() {
     audio.play().then(() => {
         playButton.textContent = "⏸";
     }).catch(error => {
-        console.log("Không thể phát nhạc:", error);
+        console.log("Không thể tự động phát nhạc do chính sách trình duyệt:", error);
     });
 }
 
@@ -633,6 +631,7 @@ function formatTime(seconds) {
     return `${minutes}:${secs}`;
 }
 
+// Tải bài hát đầu tiên khi mở trang
 loadSong(0);
 
 </script>
