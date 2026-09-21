@@ -13,7 +13,9 @@ const songs = [
   "bob$ - Ít Bạn Ít Nạn.flac",
   "h3R3 - 忘不掉的你.flac",
   "nuts.flac",
-  "05. Anh Chưa Thương Em Đến Vậy Đâu.opus"
+  "05. Anh Chưa Thương Em Đến Vậy Đâu.opus",
+  "水仙LONE - 我走以后 (鼓点版).m4a",
+   
 ];
 
 // Múi giờ của đồng hồ. Để "" = dùng giờ trên thiết bị người xem.
