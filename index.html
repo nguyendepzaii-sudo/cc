@@ -1,551 +1,1368 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta charset="UTF-8">
 
-    <title>spekco | Profile</title>
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
-    <style>
-        /* =========================================================
-           1. VARIABLES
-        ========================================================= */
+<title>spekco | Profile</title>
 
-        :root {
-            --bg: #0f051d;
-            --card: rgba(20, 10, 35, 0.48);
 
-            --text: #ffffff;
-            --muted: #cfc5da;
+<style>
 
-            --pink: #ff8fd2;
-            --pink-light: #ffe5f3;
-            --purple: #a66cff;
+/* =========================================================
+   RESET
+========================================================= */
 
-            --online: #6cff3d;
-            --offline: #888888;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
-            --border: rgba(255, 255, 255, 0.18);
-            --glass: rgba(255, 255, 255, 0.08);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+}
 
-            --radius: 22px;
-            --gap: 14px;
-        }
 
+html,
+body {
+    width: 100%;
+    min-height: 100%;
 
-        /* =========================================================
-           2. RESET
-        ========================================================= */
+    overflow-x: hidden;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        html {
-            min-height: 100%;
-        }
+body {
+    min-height: 100vh;
 
-        body {
-            min-height: 100vh;
-            width: 100%;
+    color: #fff;
 
-            overflow-x: hidden;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #251034 0%,
+            #10071b 45%,
+            #08040e 100%
+        );
 
-            color: var(--text);
-            background: var(--bg);
+    isolation: isolate;
+}
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                sans-serif;
-        }
 
-        button,
-        input {
-            font: inherit;
-        }
+/* =========================================================
+   LIQUID BACKGROUND
+========================================================= */
 
+.liquid-bg {
 
-        /* =========================================================
-           3. LAYOUT
-        ========================================================= */
+    position: fixed;
 
-        .container {
-            width: calc(100% - 24px);
-            max-width: 390px;
+    inset: 0;
 
-            margin: 20px auto;
+    z-index: -3;
 
-            display: flex;
-            flex-direction: column;
-            gap: var(--gap);
-        }
+    overflow: hidden;
 
-        .card {
-            padding: 18px;
+    pointer-events: none;
 
-            border-radius: var(--radius);
+    filter: blur(35px);
+}
 
-            background: var(--card);
 
-            border: 1px solid var(--border);
+.liquid-orb {
 
-            box-shadow:
-                0 8px 35px rgba(0, 0, 0, 0.35),
-                inset 0 0 20px rgba(255, 255, 255, 0.03);
+    position: absolute;
 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
+    width: 230px;
+    height: 230px;
 
+    border-radius: 50%;
 
-        /* =========================================================
-           4. PROFILE
-        ========================================================= */
+    opacity: .45;
 
-        .profile-card {
-            padding-top: 22px;
-            text-align: center;
-        }
+    filter: blur(15px);
 
-        .speech-bubble {
-            display: inline-block;
+    will-change: transform;
 
-            padding: 8px 12px;
-            margin-bottom: 15px;
+    animation:
+        liquidMove 14s ease-in-out infinite alternate;
+}
 
-            border-radius: 14px;
 
-            background: rgba(255, 150, 210, 0.18);
-            border: 1px solid rgba(255, 180, 220, 0.35);
+/* Pink */
 
-            color: var(--pink-light);
+.orb-1 {
 
-            font-size: 12px;
-        }
+    top: 5%;
+    left: -70px;
 
-        .avatar-wrapper {
-            width: 92px;
-            height: 92px;
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,91,197,.65),
+            rgba(255,91,197,0)
+        );
 
-            margin: 0 auto 12px;
-            padding: 3px;
+    animation-duration: 17s;
+}
 
-            border-radius: 50%;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff9edc,
-                    var(--purple),
-                    #ff9edc
-                );
+/* Purple */
 
-            box-shadow:
-                0 0 25px rgba(220, 100, 255, 0.65);
-        }
+.orb-2 {
 
-        .avatar {
-            width: 100%;
-            height: 100%;
+    top: 28%;
+    right: -90px;
 
-            display: block;
+    background:
+        radial-gradient(
+            circle,
+            rgba(133,91,255,.65),
+            rgba(133,91,255,0)
+        );
 
-            object-fit: cover;
+    animation-duration: 20s;
 
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.8);
+    animation-delay: -4s;
+}
 
-            background: #1a0d2a;
-        }
 
-        .username {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+/* Blue */
 
+.orb-3 {
 
-        /* =========================================================
-           5. ONLINE STATUS
-        ========================================================= */
+    top: 58%;
+    left: -100px;
 
-        .status-badge {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 7px;
+    background:
+        radial-gradient(
+            circle,
+            rgba(74,111,255,.45),
+            rgba(74,111,255,0)
+        );
 
-            margin-top: 6px;
+    animation-duration: 22s;
 
-            color: #9cff68;
-            font-size: 13px;
+    animation-delay: -7s;
+}
 
-            transition: color 0.3s ease;
-        }
 
-        .status-dot {
-            width: 9px;
-            height: 9px;
+/* Pink */
 
-            border-radius: 50%;
+.orb-4 {
 
-            background: var(--online);
+    bottom: -80px;
+    right: -60px;
 
-            box-shadow: 0 0 10px var(--online);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,80,180,.45),
+            rgba(255,80,180,0)
+        );
 
-            animation: pulse 1.5s infinite;
-        }
+    animation-duration: 18s;
 
-        .status-badge.offline-text {
-            color: #aaaaaa;
-        }
+    animation-delay: -3s;
+}
 
-        .status-dot.offline {
-            background: var(--offline);
-            box-shadow: none;
-            animation: none;
-        }
 
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+@keyframes liquidMove {
 
-            50% {
-                transform: scale(1.35);
-                opacity: 0.6;
-            }
-        }
+    0% {
 
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+    }
 
-        /* =========================================================
-           6. STATUS CARD
-        ========================================================= */
+    30% {
 
-        .status-card {
-            text-align: center;
+        transform:
+            translate3d(55px,-35px,0)
+            scale(1.12);
+    }
 
-            color: #e9dff5;
+    60% {
 
-            font-size: 14px;
-            font-style: italic;
-        }
+        transform:
+            translate3d(-30px,60px,0)
+            scale(.92);
+    }
 
+    100% {
 
-        /* =========================================================
-           7. MUSIC PLAYER
-        ========================================================= */
+        transform:
+            translate3d(45px,20px,0)
+            scale(1.08);
+    }
+}
 
-        .music-card {
-            text-align: center;
-        }
 
-        .music-label {
-            margin-bottom: 8px;
+/* =========================================================
+   GLASS NOISE
+========================================================= */
 
-            color: #ff9bd8;
+.glass-noise {
 
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+    position: fixed;
 
-        .clock {
-            margin-bottom: 8px;
+    inset: 0;
 
-            color: var(--pink);
+    z-index: -1;
 
-            font-size: 25px;
-            font-weight: 700;
-        }
+    pointer-events: none;
 
-        .song-title {
-            margin-bottom: 14px;
+    opacity: .025;
 
-            overflow: hidden;
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
 
-            white-space: nowrap;
-            text-overflow: ellipsis;
 
-            font-size: 14px;
-        }
+/* =========================================================
+   LAYOUT
+========================================================= */
 
+.container {
 
-        /* Progress */
+    width:
+        calc(100% - 24px);
 
-        .progress-container {
-            width: 100%;
-            margin-bottom: 5px;
-        }
+    max-width: 390px;
 
-        #progress {
-            width: 100%;
-            height: 5px;
+    margin:
+        20px auto;
 
-            appearance: none;
-            -webkit-appearance: none;
+    display: flex;
 
-            border: 0;
-            border-radius: 10px;
+    flex-direction: column;
 
-            background: rgba(255, 255, 255, 0.2);
+    gap: 14px;
+}
 
-            outline: none;
 
-            cursor: pointer;
-        }
+/* =========================================================
+   GLASS CARD
+========================================================= */
 
-        #progress::-webkit-slider-thumb {
-            width: 14px;
-            height: 14px;
+.card {
 
-            appearance: none;
-            -webkit-appearance: none;
+    position: relative;
 
-            border-radius: 50%;
-            border: 0;
+    overflow: hidden;
 
-            background: var(--pink);
+    padding: 18px;
 
-            box-shadow:
-                0 0 10px rgba(255, 100, 210, 0.8);
+    border-radius: 22px;
 
-            cursor: pointer;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
 
-        #progress::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
+    border:
+        1px solid rgba(255,255,255,.14);
 
-            border: 0;
-            border-radius: 50%;
+    backdrop-filter:
+        blur(24px)
+        saturate(145%);
 
-            background: var(--pink);
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(145%);
 
-            box-shadow:
-                0 0 10px rgba(255, 100, 210, 0.8);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(255,255,255,.025),
+        0 15px 45px rgba(0,0,0,.28);
 
-            cursor: pointer;
-        }
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
 
-        .time-row {
-            display: flex;
-            justify-content: space-between;
 
-            margin-top: 5px;
+/* Glass reflection */
 
-            color: var(--muted);
+.card::before {
 
-            font-size: 10px;
-        }
+    content: "";
 
+    position: absolute;
 
-        /* Music buttons */
+    top: -100%;
+    left: -50%;
 
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
+    width: 200%;
+    height: 200%;
 
-            margin-top: 13px;
-        }
+    pointer-events: none;
 
-        .music-button {
-            width: 44px;
-            height: 44px;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 35%,
+            rgba(255,255,255,.055) 45%,
+            rgba(255,255,255,.11) 50%,
+            rgba(255,255,255,.055) 55%,
+            transparent 65%
+        );
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    transform:
+        translateX(-60%)
+        rotate(8deg);
 
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
+    opacity: .45;
 
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
+    animation:
+        glassReflection 9s ease-in-out infinite;
+}
 
-            font-size: 17px;
 
-            cursor: pointer;
+@keyframes glassReflection {
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
-        }
+    0%,
+    100% {
 
-        .music-button:hover {
-            background: rgba(255, 255, 255, 0.16);
-        }
+        transform:
+            translateX(-65%)
+            rotate(8deg);
+    }
 
-        .music-button:active {
-            transform: scale(0.88);
-        }
+    50% {
 
-        .play-button {
-            width: 56px;
-            height: 56px;
+        transform:
+            translateX(65%)
+            rotate(8deg);
+    }
+}
 
-            font-size: 21px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255, 120, 200, 0.65),
-                    rgba(150, 100, 255, 0.65)
-                );
+/* Edge light */
 
-            box-shadow:
-                0 0 20px rgba(220, 100, 255, 0.35);
-        }
+.card::after {
 
+    content: "";
 
-        /* =========================================================
-           8. TECH STACK
-        ========================================================= */
+    position: absolute;
 
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+    inset: 0;
 
-            gap: 14px;
-        }
+    border-radius: inherit;
 
-        .tech-icon {
-            width: 46px;
-            height: 46px;
+    pointer-events: none;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    background:
+        radial-gradient(
+            circle at
+            var(--light-x,50%)
+            var(--light-y,0%),
+            rgba(255,255,255,.16),
+            transparent 28%
+        );
 
-            border-radius: 12px;
+    opacity: .7;
+}
 
-            background: var(--glass);
 
-            border: 1px solid rgba(255, 255, 255, 0.12);
+/* =========================================================
+   PROFILE
+========================================================= */
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
-        }
+.profile-card {
 
-        .tech-icon:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.15);
-        }
+    text-align: center;
 
-        .tech-icon svg {
-            width: 28px;
-            height: 28px;
-        }
+    padding-top: 22px;
 
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,150,220,.075),
+            rgba(100,60,180,.035)
+        );
+}
 
-        /* =========================================================
-           9. MOBILE
-        ========================================================= */
 
-        @media (max-width: 420px) {
-            .container {
-                width: calc(100% - 18px);
-                margin: 12px auto;
-            }
+.speech-bubble {
 
-            .card {
-                padding: 15px;
-            }
+    display: inline-block;
 
-            .clock {
-                font-size: 22px;
-            }
-        }
-    </style>
+    max-width: 100%;
+
+    padding: 8px 12px;
+
+    margin-bottom: 15px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,150,210,.13);
+
+    border:
+        1px solid rgba(255,180,220,.30);
+
+    color: #ffe5f3;
+
+    font-size: 12px;
+
+    backdrop-filter:
+        blur(15px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(15px)
+        saturate(150%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 8px 25px rgba(0,0,0,.12);
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.avatar-wrapper {
+
+    position: relative;
+
+    width: 92px;
+    height: 92px;
+
+    margin:
+        0 auto 12px;
+
+    padding: 3px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9edc,
+            #a66cff,
+            #ff9edc
+        );
+
+    box-shadow:
+        0 0 25px rgba(220,100,255,.65);
+
+    animation:
+        avatarFloat 5s ease-in-out infinite;
+}
+
+
+.avatar {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        2px solid rgba(255,255,255,.8);
+}
+
+
+@keyframes avatarFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+
+.username {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   ONLINE STATUS
+========================================================= */
+
+.status-badge {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 6px;
+
+    color: #9cff68;
+
+    font-size: 13px;
+
+    transition: color .3s ease;
+}
+
+
+.status-dot {
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #6cff3d;
+
+    box-shadow:
+        0 0 10px #6cff3d;
+
+    animation:
+        pulse 1.5s infinite;
+}
+
+
+@keyframes pulse {
+
+    0%,
+    100% {
+
+        transform: scale(1);
+
+        opacity: 1;
+    }
+
+    50% {
+
+        transform: scale(1.35);
+
+        opacity: .6;
+    }
+}
+
+
+.status-badge.offline-text {
+
+    color: #aaa;
+}
+
+
+.status-dot.offline {
+
+    background: #888;
+
+    box-shadow: none;
+
+    animation: none;
+}
+
+
+/* =========================================================
+   STATUS CARD
+========================================================= */
+
+.status-card {
+
+    text-align: center;
+
+    color: #e9dff5;
+
+    font-size: 14px;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   MUSIC PLAYER
+========================================================= */
+
+.music-card {
+
+    text-align: center;
+
+    padding:
+        18px 18px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,120,210,.065),
+            rgba(130,90,255,.04)
+        );
+}
+
+
+.music-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 5px;
+}
+
+
+.music-label {
+
+    color: #e08ac2;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
+}
+
+
+.music-status {
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: .7px;
+
+    transition: .3s;
+}
+
+
+.music-status.playing {
+
+    color: #8aff72;
+
+    background:
+        rgba(100,255,80,.08);
+
+    border-color:
+        rgba(100,255,80,.16);
+}
+
+
+.music-status.error {
+
+    color: #ff8cba;
+
+    background:
+        rgba(255,80,130,.08);
+
+    border-color:
+        rgba(255,80,130,.16);
+}
+
+
+/* Clock */
+
+.clock {
+
+    margin:
+        4px 0 8px;
+
+    color: #ff8ed4;
+
+    font-size: 22px;
+
+    font-weight: 600;
+
+    letter-spacing: .3px;
+
+    text-shadow:
+        0 0 18px rgba(255,100,210,.25);
+}
+
+
+/* Song */
+
+.song-info {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    margin-bottom: 16px;
+}
+
+
+.song-title {
+
+    min-width: 0;
+
+    max-width: 85%;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    color: #f1eaf3;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+.song-number {
+
+    flex-shrink: 0;
+
+    color:
+        rgba(255,255,255,.35);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-container {
+
+    width: 100%;
+}
+
+
+#progress {
+
+    width: 100%;
+
+    height: 5px;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border: 0;
+
+    outline: none;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.13);
+
+    cursor: pointer;
+}
+
+
+#progress::-webkit-slider-runnable-track {
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    background:
+        var(--progress-bg,
+        rgba(255,255,255,.13));
+}
+
+
+#progress::-webkit-slider-thumb {
+
+    width: 14px;
+    height: 14px;
+
+    margin-top: -4.5px;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #ff8ed4;
+
+    box-shadow:
+        0 0 10px rgba(255,100,210,.8),
+        0 0 20px rgba(255,100,210,.25);
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease;
+}
+
+
+#progress::-webkit-slider-thumb:active {
+
+    transform: scale(1.25);
+}
+
+
+#progress::-moz-range-track {
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.13);
+}
+
+
+#progress::-moz-range-progress {
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff87d2,
+            #9e6eff
+        );
+}
+
+
+#progress::-moz-range-thumb {
+
+    width: 14px;
+    height: 14px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #ff8ed4;
+
+    box-shadow:
+        0 0 10px rgba(255,100,210,.8);
+
+    cursor: pointer;
+}
+
+
+/* Time */
+
+.time-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 7px;
+
+    color:
+        rgba(255,255,255,.42);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   MUSIC BUTTONS
+========================================================= */
+
+.controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 18px;
+}
+
+
+.music-button {
+
+    position: relative;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 50%;
+
+    color: #fff;
+
+    background:
+        rgba(255,255,255,.065);
+
+    backdrop-filter:
+        blur(18px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(18px)
+        saturate(150%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.12);
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.music-button::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    top: -48px;
+    left: -48px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.18),
+            transparent 65%
+        );
+
+    transition:
+        transform .4s ease;
+}
+
+
+.music-button:hover {
+
+    background:
+        rgba(255,255,255,.11);
+}
+
+
+.music-button:hover::before {
+
+    transform:
+        translate3d(40px,40px,0);
+}
+
+
+.music-button:active {
+
+    transform: scale(.88);
+}
+
+
+/* Main play */
+
+.play-button {
+
+    width: 58px;
+    height: 58px;
+
+    font-size: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,130,205,.58),
+            rgba(145,105,255,.58)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.2),
+        0 0 25px rgba(210,100,255,.28);
+}
+
+
+/* Playing glow */
+
+.music-card.is-playing
+.play-button {
+
+    animation:
+        musicGlow 2.2s ease-in-out infinite;
+}
+
+
+@keyframes musicGlow {
+
+    0%,
+    100% {
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.2),
+            0 0 20px rgba(210,100,255,.22);
+    }
+
+    50% {
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.2),
+            0 0 32px rgba(210,100,255,.45);
+    }
+}
+
+
+/* =========================================================
+   TECH STACK
+========================================================= */
+
+.tech-stack {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+
+.tech-icon {
+
+    position: relative;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:
+        blur(15px)
+        saturate(140%);
+
+    -webkit-backdrop-filter:
+        blur(15px)
+        saturate(140%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.1);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+
+.tech-icon:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,.15);
+}
+
+
+.tech-icon svg {
+
+    width: 28px;
+    height: 28px;
+}
+
+
+.tech-icon::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    top: -30px;
+    left: -30px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    transition:
+        transform .35s ease;
+}
+
+
+.tech-icon:hover::before {
+
+    transform:
+        translate(35px,35px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .container {
+
+        width:
+            calc(100% - 18px);
+
+        margin:
+            12px auto;
+    }
+
+
+    .card {
+
+        padding: 15px;
+    }
+
+
+    .profile-card {
+
+        padding-top: 20px;
+    }
+
+
+    .clock {
+
+        font-size: 21px;
+    }
+
+
+    .controls {
+
+        gap: 18px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
+
+</style>
+
 </head>
 
 
 <body>
 
-    <main class="container">
 
-        <!-- =====================================================
-             PROFILE
-        ====================================================== -->
+<!-- =========================================================
+     LIQUID BACKGROUND
+========================================================= -->
 
-        <section class="card profile-card">
+<div class="liquid-bg">
 
-            <div class="speech-bubble">
-                i wanna be cute like u lemme feel your molecules
-            </div>
+    <div class="liquid-orb orb-1"></div>
 
-            <div class="avatar-wrapper">
-                <img
-                    src="avatar.jpg"
-                    alt="spekco avatar"
-                    class="avatar"
-                    onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%231a0d2a%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23ff9edc%22 font-size=%2230%22%3Es%3C/text%3E%3C/svg%3E';"
-                >
-            </div>
+    <div class="liquid-orb orb-2"></div>
 
-            <h1 class="username">
-                spekco
-            </h1>
+    <div class="liquid-orb orb-3"></div>
 
-            <div
-                class="status-badge"
-                id="status-badge"
-                aria-label="Connection status"
+    <div class="liquid-orb orb-4"></div>
+
+</div>
+
+
+<div class="glass-noise"></div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+    <!-- =====================================================
+         PROFILE
+    ====================================================== -->
+
+    <section class="card profile-card">
+
+        <div class="speech-bubble">
+            i wanna be cute like u lemme feel your molecules
+        </div>
+
+
+        <div class="avatar-wrapper">
+
+            <img
+                src="avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+                onerror="this.style.display='none';"
             >
-                <span
-                    class="status-dot"
-                    id="status-dot"
-                ></span>
 
-                <span id="status-text">
-                    online
-                </span>
-            </div>
-
-        </section>
+        </div>
 
 
-        <!-- =====================================================
-             STATUS
-        ====================================================== -->
-
-        <section class="card status-card">
-            "I'm not currently doing anything!"
-        </section>
+        <h1 class="username">
+            spekco
+        </h1>
 
 
-        <!-- =====================================================
-             MUSIC PLAYER
-        ====================================================== -->
+        <div
+            class="status-badge"
+            id="status-badge"
+        >
 
-        <section class="card music-card">
+            <span
+                class="status-dot"
+                id="status-dot"
+            ></span>
 
-            <p class="music-label">
-                Now Playing
-            </p>
+            <span id="status-text">
+                online
+            </span>
 
-            <div
-                class="clock"
-                id="clock"
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
+
+    <section class="card status-card">
+
+        "I'm not currently doing anything!"
+
+    </section>
+
+
+    <!-- =====================================================
+         MUSIC PLAYER
+    ====================================================== -->
+
+    <section class="card music-card">
+
+
+        <div class="music-header">
+
+            <span class="music-label">
+                NOW PLAYING
+            </span>
+
+            <span
+                class="music-status"
+                id="music-status"
             >
-                00:00:00 AM
-            </div>
+                READY
+            </span>
+
+        </div>
+
+
+        <div
+            class="clock"
+            id="clock"
+        >
+            00:00:00 AM
+        </div>
+
+
+        <div class="song-info">
 
             <div
                 class="song-title"
@@ -554,219 +1371,31 @@
                 Loading...
             </div>
 
-
-            <div class="progress-container">
-
-                <input
-                    id="progress"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="0"
-                    step="0.1"
-                    aria-label="Music progress"
-                >
-
-                <div class="time-row">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">0:00</span>
-                </div>
-
+            <div
+                class="song-number"
+                id="song-number"
+            >
+                1 / 1
             </div>
 
-
-            <div class="controls">
-
-                <button
-                    class="music-button"
-                    id="prev-button"
-                    type="button"
-                    aria-label="Previous song"
-                >
-                    ⏮
-                </button>
-
-                <button
-                    class="music-button play-button"
-                    id="play-button"
-                    type="button"
-                    aria-label="Play"
-                >
-                    ▶
-                </button>
-
-                <button
-                    class="music-button"
-                    id="next-button"
-                    type="button"
-                    aria-label="Next song"
-                >
-                    ⏭
-                </button>
-
-            </div>
-
-            <audio
-                id="audio-player"
-                preload="metadata"
-            ></audio>
-
-        </section>
+        </div>
 
 
-        <!-- =====================================================
-             TECH STACK
-        ====================================================== -->
+        <div class="progress-container">
 
-        <section class="card">
-
-            <div class="tech-stack">
-
-                <!-- JavaScript -->
-                <div
-                    class="tech-icon"
-                    title="JavaScript"
-                    aria-label="JavaScript"
-                >
-                    <svg viewBox="0 0 128 128">
-                        <rect
-                            width="128"
-                            height="128"
-                            rx="16"
-                            fill="#F7DF1E"
-                        />
-
-                        <path
-                            d="M67.31 102.06c3.48 5.61 8.28 9.38 16.32 9.38 6.84 0 11.52-3.36 11.52-8.04 0-5.64-4.56-7.8-12.24-11.16l-4.2-1.8c-12.24-5.16-20.28-11.52-20.28-25.08 0-12.36 9.6-21.72 24.84-21.72 10.92 0 18.96 3.96 24.36 13.44l-11.52 7.44c-3.12-5.4-6.48-7.32-12.48-7.32-4.56 0-7.8 2.88-7.8 6.48 0 4.68 3.12 6.72 10.32 9.84l4.2 1.8c14.76 6.36 22.32 12.36 22.32 26.28 0 14.88-11.64 22.92-28.56 22.92-15.6 0-25.08-7.56-29.88-16.92l13.08-7.56z"
-                            fill="#000"
-                        />
-                    </svg>
-                </div>
+            <input
+                id="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                step="0.01"
+                aria-label="Music progress"
+            >
 
 
-                <!-- HTML5 -->
-                <div
-                    class="tech-icon"
-                    title="HTML5"
-                    aria-label="HTML5"
-                >
-                    <svg viewBox="0 0 128 128">
-                        <path
-                            fill="#E44D26"
-                            d="M18.8 11.2l9.1 102.2 36.1 10 36.1-10 9.1-102.2H18.8z"
-                        />
+            <div class="time-row">
 
-                        <path
-                            fill="#F16529"
-                            d="M64 121.2l30.2-8.4 7.8-87.3H64v95.7z"
-                        />
-
-                        <path
-                            fill="#EBEBEB"
-                            d="M64 54.1H48.4l-1.1-12.3H64V29.5H33.5l3.4 37H64v-12.4zm0 33.6l-13.7-3.7-.9-9.8H36.9l1.7 19.5 25.4 7V87.7z"
-                        />
-
-                        <path
-                            fill="#FFFFFF"
-                            d="M64 54.1v12.4h14.5l-1.4 15.3-13.1 3.5v12.2l25.3-7 2.5-28.1c.2-2.1.2-3.8.2-5.9l.1-2.4H64zm0-24.6v12.3h31.8l1.1-12.3H64z"
-                        />
-                    </svg>
-                </div>
-
-
-                <!-- Python -->
-                <div
-                    class="tech-icon"
-                    title="Python"
-                    aria-label="Python"
-                >
-                    <svg viewBox="0 0 128 128">
-
-                        <defs>
-                            <linearGradient
-                                id="python-blue"
-                                x1="13.2"
-                                y1="12.5"
-                                x2="68.2"
-                                y2="70.2"
-                                gradientUnits="userSpaceOnUse"
-                            >
-                                <stop offset="0" stop-color="#387EB8"/>
-                                <stop offset="1" stop-color="#366994"/>
-                            </linearGradient>
-
-                            <linearGradient
-                                id="python-yellow"
-                                x1="59.8"
-                                y1="58.2"
-                                x2="114.8"
-                                y2="115.8"
-                                gradientUnits="userSpaceOnUse"
-                            >
-                                <stop offset="0" stop-color="#FFE052"/>
-                                <stop offset="1" stop-color="#FFC321"/>
-                            </linearGradient>
-                        </defs>
-
-                        <path
-                            fill="url(#python-blue)"
-                            d="M63.1 11c-28.6 0-26.9 12.4-26.9 12.4l.1 12.8h27.4v3.9H25.3S11 38.5 11 67.4c0 28.9 12.5 27.8 12.5 27.8h7.5V82.8s-.4-14.8 14.5-14.8h25.1s13.8.2 13.8-13.3V25.2S86.2 11 63.1 11zm-14.7 9.1c2.7 0 4.9 2.2 4.9 4.9s-2.2 4.9-4.9 4.9-4.9-2.2-4.9-4.9 2.2-4.9 4.9-4.9z"
-                        />
-
-                        <path
-                            fill="url(#python-yellow)"
-                            d="M64.9 117c28.6 0 26.9-12.4 26.9-12.4l-.1-12.8H64.3v-3.9h38.4s14.3 1.6 14.3-27.3c0-28.9-12.5-27.8-12.5-27.8h-7.5v12.4s.4 14.8-14.5 14.8H67.4s-13.8.2-13.8 13.3v29.5s-1.8 14.2 21.3 14.2zm14.7-9.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9 4.9 2.2 4.9 4.9-2.2 4.9-4.9 4.9z"
-                        />
-
-                    </svg>
-                </div>
-
-
-                <!-- C / C++ -->
-                <div
-                    class="tech-icon"
-                    title="C / C++"
-                    aria-label="C / C++"
-                >
-                    <svg viewBox="0 0 128 128">
-
-                        <path
-                            fill="#00599C"
-                            d="M117.5 38.5l-48-27.7c-3.4-2-7.6-2-11 0l-48 27.7c-3.4 2-5.5 5.6-5.5 9.5v55.4c0 3.9 2.1 7.5 5.5 9.5l48 27.7c3.4 2 7.6 2 11 0l48-27.7c3.4-2 5.5-5.6 5.5-9.5V48c0-3.9-2.1-7.5-5.5-9.5z"
-                        />
-
-                        <path
-                            fill="#FFFFFF"
-                            d="M64.5 35c-15.5 0-28 12.5-28 28s12.5 28 28 28c11 0 20.5-6.3 25-15.5h-12c-3.3 4.2-8.4 7-13 7-9.9 0-18-8.1-18-18s8.1-18 18-18c4.6 0 9.7 2.8 13 7h12C85 41.3 75.5 35 64.5 35z"
-                        />
-
-                    </svg>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script>
-        /* =========================================================
-           1. PLAYLIST
-           
-           Chỉ cần sửa danh sách bên dưới.
-           
-           Ví dụ:
-           "music/song.flac"
-           "music/song2.mp3"
-        ========================================================= */
-
-        const PLAYLIST = [
-            "bob$ - Ít Bạn Ít Nạn.flac",
-            "nhac-khac-1.flac"
-        ];
-
-
-        /* =========================================================
-           2. DOM
-        ============================
+                <span id="current-time">
+                    0:00
+              
