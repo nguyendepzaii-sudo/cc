@@ -34,42 +34,6 @@ body {
     overflow-x: hidden;
     color: white;
     background-color: #0f051d;
-    position: relative;
-    z-index: 1;
-}
-
-/* Tạo các khối màu chuyển động phía sau để kính làm mờ (Glassmorphism) */
-body::before, body::after {
-    content: "";
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(90px);
-    z-index: -1;
-    animation: floatBg 10s infinite alternate ease-in-out;
-}
-
-body::before {
-    width: 350px;
-    height: 350px;
-    background: #9664ff;
-    top: -10%;
-    left: -20%;
-    opacity: 0.55;
-}
-
-body::after {
-    width: 300px;
-    height: 300px;
-    background: #ff78c8;
-    bottom: -10%;
-    right: -20%;
-    opacity: 0.45;
-    animation-delay: -5s;
-}
-
-@keyframes floatBg {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(40px, 50px) scale(1.15); }
 }
 
 /* =========================
@@ -93,14 +57,22 @@ body::after {
     width: 100%;
     padding: 18px;
     border-radius: 22px;
-    /* Tối ưu hiệu ứng kính mờ chân thực */
-    background: rgba(255, 255, 255, 0.05); 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    /* Kính trong, giữ nguyên tông tím */
+    background: rgba(20, 10, 35, 0.42);
+
+    /* Viền kính */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    /* Bóng ngoài + ánh sáng nhẹ bên trong */
     box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.35),
-        inset 0 1px 2px rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+        0 8px 35px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 0 20px rgba(255, 255, 255, 0.035);
+
+    /* Kính mờ */
+    backdrop-filter: blur(20px) saturate(135%);
+    -webkit-backdrop-filter: blur(20px) saturate(135%);
 }
 
 /* =========================
@@ -118,12 +90,10 @@ body::after {
     padding: 8px 12px;
     margin-bottom: 15px;
     border-radius: 14px;
-    background: rgba(255, 150, 210, 0.12);
-    border: 1px solid rgba(255, 180, 220, 0.25);
+    background: rgba(255, 150, 210, 0.18);
+    border: 1px solid rgba(255, 180, 220, 0.35);
     color: #ffe5f3;
     font-size: 12px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 
 /* =========================
@@ -234,7 +204,6 @@ body::after {
     color: #ff8fd2;
     letter-spacing: 1px;
     margin-bottom: 8px;
-    text-shadow: 0 0 15px rgba(255,143,210,0.3);
 }
 
 .song-title {
@@ -261,7 +230,7 @@ body::after {
     appearance: none;
     -webkit-appearance: none;
     border-radius: 10px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.2);
     outline: none;
 }
 
@@ -273,7 +242,6 @@ body::after {
     border-radius: 50%;
     background: #ff8fd2;
     box-shadow: 0 0 10px rgba(255,100,210,0.8);
-    cursor: pointer;
 }
 
 .time-row {
@@ -305,31 +273,24 @@ body::after {
     align-items: center;
     justify-content: center;
     color: white;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.10);
     border: 1px solid rgba(255,255,255,0.15);
     font-size: 17px;
     cursor: pointer;
     transition: 0.2s;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.music-button:hover {
-    background: rgba(255,255,255,0.12);
 }
 
 .music-button:active {
     transform: scale(0.88);
-    background: rgba(255,150,220,0.25);
+    background: rgba(255,150,220,0.3);
 }
 
 .play-button {
     width: 56px;
     height: 56px;
     font-size: 21px;
-    background: linear-gradient(135deg, rgba(255,120,200,0.45), rgba(150,100,255,0.45));
+    background: linear-gradient(135deg, rgba(255,120,200,0.65), rgba(150,100,255,0.65));
     box-shadow: 0 0 20px rgba(220,100,255,0.35);
-    border: 1px solid rgba(255,255,255,0.25);
 }
 
 /* =========================
@@ -360,16 +321,14 @@ body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
     transition: transform 0.2s ease, background 0.2s ease;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 .tech-icon:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .tech-icon svg {
@@ -479,6 +438,7 @@ body::after {
     <!-- TECH STACK -->
     <div class="card">
         <div class="tech-stack">
+
             <!-- JavaScript Logo -->
             <div class="tech-icon" title="JavaScript">
                 <svg viewBox="0 0 128 128">
@@ -504,11 +464,14 @@ body::after {
                         <stop offset="0" stop-color="#387EB8"/>
                         <stop offset="1" stop-color="#366994"/>
                     </linearGradient>
+
                     <linearGradient id="py-b" x1="59.8" y1="58.2" x2="114.8" y2="115.8" gradientUnits="userSpaceOnUse">
                         <stop offset="0" stop-color="#FFE052"/>
                         <stop offset="1" stop-color="#FFC321"/>
                     </linearGradient>
+
                     <path fill="url(#py-a)" d="M63.1 11c-28.6 0-26.9 12.4-26.9 12.4l.1 12.8h27.4v3.9H25.3S11 38.5 11 67.4c0 28.9 12.5 27.8 12.5 27.8h7.5V82.8s-.4-14.8 14.5-14.8h25.1s13.8.2 13.8-13.3V25.2S86.2 11 63.1 11zm-14.7 9.1c2.7 0 4.9 2.2 4.9 4.9s-2.2 4.9-4.9 4.9-4.9-2.2-4.9-4.9 2.2-4.9 4.9-4.9z"/>
+
                     <path fill="url(#py-b)" d="M64.9 117c28.6 0 26.9-12.4 26.9-12.4l-.1-12.8H64.3v-3.9h38.4s14.3 1.6 14.3-27.3c0-28.9-12.5-27.8-12.5-27.8h-7.5v12.4s.4 14.8-14.5 14.8H67.4s-13.8-.2-13.8 13.3v29.5s-1.8 14.2 21.3 14.2zm14.7-9.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9 4.9 2.2 4.9 4.9-2.2 4.9-4.9 4.9z"/>
                 </svg>
             </div>
@@ -519,6 +482,7 @@ body::after {
                     <path fill="#539E43" d="M64 12.8L17.8 39.5v53.3L64 119.5l46.2-26.7V39.5L64 12.8zm27.8 61c-1.3 3.9-3.8 6.9-7.3 9-3.6 2.1-7.8 3.1-12.6 3.1-4.7 0-9.1-1-13.1-3-4-2-7.2-4.9-9.5-8.8-2.3-3.9-3.5-8.5-3.5-13.8 0-5.3 1.2-9.9 3.5-13.8 2.3-3.9 5.5-6.8 9.5-8.8 4-2 8.4-3 13.1-3 5.4 0 10.1 1.3 14 3.9 3.9 2.6 6.6 6.3 8.1 11h-9.5c-1.2-2.3-2.9-4-5.1-5.3-2.2-1.3-4.7-1.9-7.5-1.9-3.2 0-6.1.8-8.6 2.3-2.5 1.5-4.5 3.7-5.9 6.5-1.4 2.8-2.1 6.1-2.1 9.8 0 3.7.7 7 2.1 9.8 1.4 2.8 3.4 5 5.9 6.5 2.5 1.5 5.4 2.3 8.6 2.3 3 0 5.6-.7 8-2.1 2.3-1.4 4.1-3.3 5.3-5.8h8.5z"/>
                 </svg>
             </div>
+
         </div>
     </div>
 
@@ -576,8 +540,9 @@ setInterval(updateClock, 1000);
 
 // Danh sách các file nhạc FLAC của bạn trên GitHub
 const songs = [
-    "music1.flac",
-    "music2.flac"
+    "Tien Tien - My Everything.flac",
+    "bob$ - Ít Bạn Ít Nạn.flac",
+    "music.flac"
 ];
 
 let currentSong = 0;
