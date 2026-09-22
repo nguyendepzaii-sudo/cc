@@ -5,7 +5,8 @@
     "h3R3 - 忘不掉的你.flac",
     "nuts.flac",
     "05. Anh Chưa Thương Em Đến Vậy Đâu.opus",
-    "水仙LONE - 我走以后 (鼓点版).m4a"
+    "水仙LONE - 我走以后 (鼓点版).m4a",
+    "夏日尽头的我们 x 月光呀月光.mp3"
   ];
   const CLOCK_TIMEZONE = "Asia/Shanghai";
   const $ = (id) => document.getElementById(id);
