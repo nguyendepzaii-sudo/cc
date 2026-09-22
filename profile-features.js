@@ -4,8 +4,8 @@
 ========================= */
 const PROFILE_CONFIG = {
   name: "spekco",
-  bio: "gg",
-  status: { text: "sleep", emoji: "💤💤", tone: "neutral" },
+  bio: ".gg/xnhau",
+  status: { text: "sleep", emoji: "💤", tone: "neutral" },
   particles: { desktop: 148, mobile: 78, mobileBreakpoint: 600 }
 };
 
