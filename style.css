@@ -137,6 +137,7 @@ body::before {
 ========================= */
 
 .profile-card {
+    position: relative;
     padding: 24px 20px 22px;
     border-radius: 30px;
     text-align: center;
@@ -169,6 +170,119 @@ body::before {
     border-bottom: 1px solid rgba(255, 165, 218, 0.45);
     border-bottom-right-radius: 3px;
     transform: translateX(-50%) rotate(45deg);
+}
+
+.profile-engagement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-stat,
+.profile-like {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(166, 108, 255, 0.32);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 8px 22px rgba(59, 20, 90, 0.12);
+    color: #f3eaff;
+    font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.profile-stat {
+    padding: 7px 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.profile-stat .stat-value,
+.profile-like .like-count {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+}
+
+.profile-like {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    gap: 5px;
+    padding: 6px 10px 6px 8px;
+    color: #f9ebff;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 143, 210, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 22px rgba(174, 88, 255, 0.18);
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    z-index: 3;
+}
+
+.profile-like:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 143, 210, 0.6);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.profile-like:active {
+    transform: scale(0.96);
+}
+
+.profile-like .heart-icon {
+    display: inline-block;
+    width: 15px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--orchid);
+    transform-origin: center;
+}
+
+.profile-like.is-liked {
+    border-color: rgba(255, 143, 210, 0.65);
+    background: rgba(255, 143, 210, 0.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 0 22px rgba(255, 143, 210, 0.18);
+}
+
+.profile-like.is-liked .heart-icon {
+    color: #ff73c7;
+    text-shadow: 0 0 16px rgba(255, 143, 210, 0.6);
+}
+
+.profile-like.is-popping .heart-icon {
+    animation: heart-pop 0.38s cubic-bezier(0.2, 0.8, 0.3, 1.35);
+}
+
+.profile-stat.is-changing .stat-value {
+    animation: stat-pop 0.4s ease-out;
+}
+
+@keyframes heart-pop {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.42); }
+    100% { transform: scale(1); }
+}
+
+@keyframes stat-pop {
+    0%   { opacity: 0.45; transform: translateY(4px) scale(0.88); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* =========================
@@ -620,6 +734,20 @@ body::before {
     .music-card {
         padding-left: 16px;
         padding-right: 16px;
+    }
+
+    .profile-card {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .profile-like {
+        top: 12px;
+        right: 12px;
+    }
+
+    .profile-engagement {
+        margin-top: 14px;
     }
 
     .controls {
