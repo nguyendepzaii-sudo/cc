@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#030405">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="Profile cá nhân của spekco — now playing và trạng thái.">
+  <meta name="description" content="Personal profile and music player.">
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="spekco | Profile">
-  <meta property="og:description" content="Một góc nhỏ của spekco — đang nghe nhạc và chill.">
-  <meta property="og:image" content="https://spekco.xyz/avatar.jpg">
-  <meta property="og:url" content="https://spekco.xyz/">
-  <title>spekco | Profile</title>
+  <meta property="og:title" content="Profile">
+  <meta property="og:description" content="A small personal profile.">
+  <meta property="og:image" content="avatar.jpg">
+  <title>Profile</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Fredoka:wght@400;500;600&display=swap">
@@ -21,46 +20,24 @@
   <canvas id="starfield" aria-hidden="true"></canvas>
   <div class="nebula nebula-one" aria-hidden="true"></div>
   <div class="nebula nebula-two" aria-hidden="true"></div>
-
   <main class="container">
     <section class="card profile-card">
-      <span class="orbit orbit-one" aria-hidden="true"></span>
-      <span class="orbit orbit-two" aria-hidden="true"></span>
-      <p class="speech-bubble" id="status-emoji" aria-hidden="true">💤</p>
-      <div class="avatar-wrapper">
-        <img src="avatar.jpg" alt="spekco's avatar" class="avatar" width="96" height="96" decoding="async">
-        <span class="avatar-initial" aria-hidden="true">s</span>
-      </div>
-      <h1 class="username" id="profile-name">spekco</h1>
-      <div class="status-badge" id="status-badge">
-        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
-        <span id="status-emoji-text">💤</span>
-        <span id="status-text">sleep</span>
-      </div>
+      <span class="orbit orbit-one" aria-hidden="true"></span><span class="orbit orbit-two" aria-hidden="true"></span>
+      <p class="speech-bubble" id="status-emoji" aria-hidden="true"></p>
+      <div class="avatar-wrapper"><img src="avatar.jpg" alt="" class="avatar" width="96" height="96" decoding="async"><span class="avatar-initial" aria-hidden="true"></span></div>
+      <h1 class="username" id="profile-name"></h1>
+      <div class="status-badge" id="status-badge"><span class="status-dot" id="status-dot" aria-hidden="true"></span><span id="status-emoji-text"></span><span id="status-text"></span></div>
     </section>
-
     <section class="card status-card"><p id="quote" aria-label="Quote"></p></section>
-
     <section class="card music-card" aria-label="Music player">
-      <div class="music-head">
-        <div class="music-label"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="music-label">now playing</span></div>
-        <span class="clock" id="clock">--:--:--</span>
-      </div>
-      <div class="track"><div class="song-title" id="song-name">Đang kiểm tra nhạc…</div><div class="song-artist" id="song-artist"></div></div>
-      <div class="progress-container">
-        <input id="progress" type="range" min="0" max="100" value="0" step="any" aria-label="Seek" disabled>
-        <div class="time-row"><span id="current-time">0:00</span><span id="duration">0:00</span></div>
-      </div>
-      <div class="controls">
-        <button class="music-button" id="prev-button" type="button" aria-label="Previous track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h2v13H6zM18 5.5 9 12l9 6.5z"></path></svg></button>
-        <button class="music-button play-button" id="play-button" type="button" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"></path></svg><svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg></button>
-        <button class="music-button" id="next-button" type="button" aria-label="Next track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5.5h2v13h-2zM6 5.5 15 12l-9 6.5z"></path></svg></button>
-      </div>
+      <div class="music-head"><div class="music-label"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="music-label"></span></div><span class="clock" id="clock">--:--:--</span></div>
+      <div class="track"><div class="song-title" id="song-name">Loading music…</div><div class="song-artist" id="song-artist"></div></div>
+      <div class="progress-container"><input id="progress" type="range" min="0" max="100" value="0" step="any" aria-label="Seek" disabled><div class="time-row"><span id="current-time">0:00</span><span id="duration">0:00</span></div></div>
+      <div class="controls"><button class="music-button" id="prev-button" type="button" aria-label="Previous track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h2v13H6zM18 5.5 9 12l9 6.5z"></path></svg></button><button class="music-button play-button" id="play-button" type="button" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"></path></svg><svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg></button><button class="music-button" id="next-button" type="button" aria-label="Next track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5.5h2v13h-2zM6 5.5 15 12l-9 6.5z"></path></svg></button></div>
       <audio id="audio-player" preload="metadata"></audio>
     </section>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="profile-features.js"></script>
-  <script src="music.js"></script>
+  <script src="profile-features.js"></script><script src="music.js"></script>
 </body>
 </html>
