@@ -6,12 +6,38 @@ const MUSIC_LIBRARY = [
   "Jess Lee - 甲乙丙丁Strangers.flac",
   "Ta - 没有你我该怎么办.flac",
   "Renran - 无人之岛.m4a",
-  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E9%84%92%E6%B2%9B%E6%B2%9B%20%26%20Pank%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0)%20-%20Single%20(2023)%20.%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0).m4a"
+  {
+    src: "https://pub-a6f896b739e543b7a5a3e838dd05edf9.r2.dev/%E9%84%92%E6%B2%9B%E6%B2%9B%20%26%20Pank%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0)%20-%20Single%20(2023)%20.%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0).m4a",
+    // Overridden manually: filename's raw " - Single (2023)" segment doesn't split cleanly into artist/title.
+    artist: "鄭沛沛 & Pank",
+    title: "沉溺(你让我的心不再结冰)"
+  }
 ];
 
 const parseTrackMetadata = (source) => {
   if (!source || typeof source !== "string") return { title: "", artist: "" };
-  const filename = source.replace(/\.[^.]+$/, "");
+
+  let filename = source;
+
+  // If source is a full URL (e.g. an R2/CDN link), keep only the last path
+  // segment — the actual file name — and drop the domain/query entirely.
+  try {
+    const parsedUrl = new URL(source, document.baseURI);
+    const segments = parsedUrl.pathname.split("/").filter(Boolean);
+    if (segments.length) filename = segments[segments.length - 1];
+  } catch {
+    // Not a resolvable URL — treat source as a plain filename, unchanged.
+  }
+
+  // Decode URL-encoded characters (%20, %26, percent-encoded CJK bytes, etc.)
+  // back into normal readable text.
+  try {
+    filename = decodeURIComponent(filename);
+  } catch {
+    // Malformed encoding — fall back to whatever we have.
+  }
+
+  filename = filename.replace(/\.[^.]+$/, "");
   const separator = filename.indexOf(" - ");
   if (separator === -1) return { title: filename, artist: "" };
   return { artist: filename.slice(0, separator), title: filename.slice(separator + 3) };
