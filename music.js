@@ -1,10 +1,7 @@
 (() => {
   "use strict";
 
-  // Chỉ cần thêm đúng tên file nhạc vào đây sau khi upload vào thư mục gốc của repo.
-  // Ví dụ: "Nghệ sĩ - Tên bài.mp3" hoặc "Tên bài.mp3"
-  // Tên file sẽ được tự động tách thành artist/title nếu có " - ".
-  const MUSIC_LIBRARY = [
+  const FALLBACK_LIBRARY = [
     "Jess Lee - 甲乙丙丁Strangers.flac",
     "Ta - 没有你我该怎么办.flac",
     "h3R3 - 忘不掉的你.flac",
@@ -12,7 +9,6 @@
     "水仙LONE - 我走以后 (鼓点版).m4a"
   ];
 
-  const config = window.SITE_CONFIG || {};
   const audio = document.getElementById("audio-player");
   const $ = (id) => document.getElementById(id);
   const ui = {
@@ -28,69 +24,59 @@
     toast: $("toast")
   };
 
-  if (!audio || !ui.title || !ui.progress || !ui.play) return;
-
-  function songFromFilename(filename) {
-    const src = String(filename || "").trim();
-    const noExt = src.replace(/\.[^./\\?#]+(?:[?#].*)?$/, "");
-    const separator = noExt.indexOf(" - ");
-
-    if (separator >= 0) {
-      return {
-        artist: noExt.slice(0, separator).trim() || "Unknown artist",
-        title: noExt.slice(separator + 3).trim() || noExt,
-        src
-      };
-    }
-
-    return {
-      artist: "Unknown artist",
-      title: noExt || "Untitled",
-      src
-    };
+  if (!audio || !ui.title || !ui.progress || !ui.play) {
+    console.error("Music player markup is incomplete.");
+    return;
   }
-
-  // Có thể dùng SITE_CONFIG.music nếu cần ghi đè danh sách mặc định.
-  // Mỗi phần tử có thể là chuỗi file hoặc object cũ.
-  const configuredSongs = Array.isArray(config.music)
-    ? config.music
-    : Array.isArray(config.music?.songs)
-      ? config.music.songs
-      : Array.isArray(window.MUSIC_CONFIG)
-        ? window.MUSIC_CONFIG
-        : null;
-  const rawSongs = configuredSongs?.length ? configuredSongs : MUSIC_LIBRARY;
-  const songs = rawSongs
-    .map((song) => typeof song === "string" ? songFromFilename(song) : song)
-    .filter((song) => song && typeof song === "object" && String(song.src || "").trim())
-    .map((song) => {
-      const auto = songFromFilename(song.src);
-      return {
-        title: String(song.title || auto.title || "Untitled"),
-        artist: String(song.artist || auto.artist || "Unknown artist"),
-        src: String(song.src).trim(),
-        fallback: song.fallback
-      };
-    });
 
   const state = {
     index: 0,
     generation: 0,
     pendingPlay: null,
-    skipGeneration: 0,
-    toastTimer: 0
+    toastTimer: 0,
+    tried: new Set()
   };
 
+  function songFromFilename(filename) {
+    const src = String(filename || "").trim();
+    const noExtension = src.replace(/\.[^./\\?#]+(?:[?#].*)?$/, "");
+    const separator = noExtension.indexOf(" - ");
+    return separator >= 0
+      ? { artist: noExtension.slice(0, separator).trim() || "Unknown artist", title: noExtension.slice(separator + 3).trim() || noExtension, src }
+      : { artist: "Unknown artist", title: noExtension || "Untitled", src };
+  }
+
+  function configuredSongs() {
+    const site = window.SITE_CONFIG?.music;
+    if (Array.isArray(site)) return site;
+    if (Array.isArray(site?.songs)) return site.songs;
+    if (Array.isArray(window.MUSIC_CONFIG)) return window.MUSIC_CONFIG;
+    return FALLBACK_LIBRARY;
+  }
+
+  const songs = configuredSongs()
+    .map((song) => typeof song === "string" ? songFromFilename(song) : song)
+    .filter((song) => song && typeof song === "object" && String(song.src || "").trim())
+    .map((song) => {
+      const auto = songFromFilename(song.src);
+      return {
+        title: String(song.title || auto.title),
+        artist: String(song.artist || auto.artist),
+        src: String(song.src).trim(),
+        fallback: song.fallback
+      };
+    });
+
   function setClass(name, enabled) {
-    if (ui.card) ui.card.classList.toggle(name, enabled);
+    ui.card?.classList.toggle(name, enabled);
   }
 
   function notify(message) {
     if (!ui.toast) return;
     ui.toast.textContent = message;
     ui.toast.classList.add("show");
-    window.clearTimeout(state.toastTimer);
-    state.toastTimer = window.setTimeout(() => ui.toast.classList.remove("show"), 3200);
+    clearTimeout(state.toastTimer);
+    state.toastTimer = setTimeout(() => ui.toast.classList.remove("show"), 3200);
   }
 
   function formatTime(value) {
@@ -103,16 +89,37 @@
     return Number.isFinite(audio.duration) && audio.duration > 0;
   }
 
-  function setProgressEnabled(enabled) {
-    ui.progress.disabled = !enabled;
-    if (!enabled) ui.progress.value = "0";
+  function updateProgress() {
+    ui.current.textContent = formatTime(audio.currentTime);
+    if (!validDuration()) {
+      ui.duration.textContent = "0:00";
+      ui.progress.disabled = true;
+      return;
+    }
+    ui.duration.textContent = formatTime(audio.duration);
+    ui.progress.disabled = false;
+    ui.progress.value = String(Math.min(100, Math.max(0, audio.currentTime / audio.duration * 100)));
+  }
+
+  function updateButton() {
+    const playing = !audio.paused && !audio.ended;
+    ui.play.classList.toggle("playing", playing);
+    ui.play.setAttribute("aria-label", playing ? "Pause" : "Play");
+    setClass("is-playing", playing);
+  }
+
+  function showSong(song) {
+    ui.title.textContent = song?.title || (songs.length ? "Unable to load music" : "No music available");
+    ui.artist.textContent = song?.artist || "";
+    ui.title.title = song?.title || "";
   }
 
   function resolveSource(source) {
     try {
+      // URL() encodes Unicode and spaces exactly once when given the raw path.
       return new URL(source, document.baseURI).href;
     } catch (error) {
-      console.warn("Invalid audio source:", source, error);
+      console.warn("Invalid audio source", { source, error });
       return "";
     }
   }
@@ -125,56 +132,39 @@
     return "";
   }
 
-  function logMediaError(song, source, event) {
-    const error = audio.error;
-    console.error("Audio error", {
-      event: event.type,
+  function candidates(song) {
+    return [song.src].concat(Array.isArray(song.fallback) ? song.fallback : song.fallback ? [song.fallback] : [])
+      .filter((source, index, all) => source && all.indexOf(source) === index);
+  }
+
+  function logError(song, source, event) {
+    const mediaError = audio.error;
+    console.error("Audio load error", {
+      event: event?.type,
       title: song?.title,
       artist: song?.artist,
-      src: song?.src,
+      originalSrc: song?.src,
       resolvedUrl: source,
-      mediaErrorCode: error?.code,
-      mediaErrorMessage: error?.message || ""
+      currentSrc: audio.currentSrc,
+      errorCode: mediaError?.code,
+      errorMessage: mediaError?.message || "",
+      readyState: audio.readyState,
+      networkState: audio.networkState
     });
   }
 
   function errorMessage() {
     switch (audio.error?.code) {
-      case MediaError.MEDIA_ERR_NETWORK: return "Network error or file not found.";
-      case MediaError.MEDIA_ERR_DECODE: return "File exists, but its audio codec could not be decoded.";
-      case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED: return "This browser does not support this audio format or source.";
-      case MediaError.MEDIA_ERR_ABORTED: return "Audio loading was interrupted.";
-      default: return "The audio source could not be loaded.";
+      case 1: return "Audio loading was interrupted.";
+      case 2: return "Network error or file not found.";
+      case 3: return "File exists, but its audio codec could not be decoded.";
+      case 4: return "This browser does not support this audio format.";
+      default: return "Unable to load music.";
     }
   }
 
-  function updateButton() {
-    const playing = !audio.paused && !audio.ended;
-    ui.play.classList.toggle("playing", playing);
-    ui.play.setAttribute("aria-label", playing ? "Pause" : "Play");
-    setClass("is-playing", playing);
-  }
-
-  function updateProgress() {
-    ui.current.textContent = formatTime(audio.currentTime);
-    if (validDuration()) {
-      ui.duration.textContent = formatTime(audio.duration);
-      ui.progress.value = String(Math.min(100, (audio.currentTime / audio.duration) * 100));
-      setProgressEnabled(true);
-    } else {
-      ui.duration.textContent = "0:00";
-      setProgressEnabled(false);
-    }
-  }
-
-  function showSong(song) {
-    ui.title.textContent = song?.title || "No music available";
-    ui.artist.textContent = song?.artist || "";
-    ui.title.title = song?.title || "";
-  }
-
-  function setMediaSession(song) {
-    if (!("mediaSession" in navigator) || !song) return;
+  function setMetadata(song) {
+    if (!("mediaSession" in navigator) || !song || typeof MediaMetadata === "undefined") return;
     try {
       navigator.mediaSession.metadata = new MediaMetadata({ title: song.title, artist: song.artist });
     } catch (error) {
@@ -182,99 +172,109 @@
     }
   }
 
-  function playAfterLoad(generation) {
+  function waitForCanPlay(generation) {
     if (generation !== state.generation) return Promise.resolve(false);
-    const promise = audio.play();
-    state.pendingPlay = promise;
-    return promise.then(() => {
-      if (generation === state.generation) updateButton();
-      return true;
-    }).catch((error) => {
-      if (generation === state.generation) {
-        updateButton();
-        notify(error?.name === "NotAllowedError" ? "Tap Play to start music." : "Unable to play this track.");
-      }
-      return false;
-    }).finally(() => {
-      if (state.pendingPlay === promise) state.pendingPlay = null;
+    if (audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return Promise.resolve(true);
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = (result) => {
+        if (settled) return;
+        settled = true;
+        audio.removeEventListener("canplay", onReady);
+        audio.removeEventListener("error", onError);
+        resolve(result);
+      };
+      const onReady = () => finish(generation === state.generation);
+      const onError = () => finish(false);
+      audio.addEventListener("canplay", onReady, { once: true });
+      audio.addEventListener("error", onError, { once: true });
     });
   }
 
-  function candidates(song) {
-    return [song.src].concat(Array.isArray(song.fallback) ? song.fallback : song.fallback ? [song.fallback] : [])
-      .filter((source, index, all) => source && all.indexOf(source) === index);
+  async function playCurrent() {
+    if (!songs.length) {
+      showSong(null);
+      notify("No music available");
+      return false;
+    }
+    if (state.pendingPlay) return state.pendingPlay;
+    const generation = state.generation;
+    state.pendingPlay = (async () => {
+      const ready = await waitForCanPlay(generation);
+      if (!ready || generation !== state.generation) return false;
+      try {
+        await audio.play();
+        updateButton();
+        return true;
+      } catch (error) {
+        updateButton();
+        if (error?.name === "NotAllowedError") notify("Tap Play to start music.");
+        else notify("Unable to play this track.");
+        return false;
+      }
+    })();
+    try {
+      return await state.pendingPlay;
+    } finally {
+      state.pendingPlay = null;
+    }
   }
 
-  function loadSong(index, shouldPlay = false, attempted = 0) {
+  function loadSong(index, shouldPlay = false) {
     if (!songs.length) {
       audio.removeAttribute("src");
       audio.load();
       showSong(null);
-      setProgressEnabled(false);
       notify("No music available");
       return Promise.resolve(false);
     }
 
     state.index = (index + songs.length) % songs.length;
     const song = songs[state.index];
-    const sources = candidates(song);
-    const source = resolveSource(sources[attempted] || "");
+    const source = resolveSource(candidates(song)[0]);
     const generation = ++state.generation;
-    state.skipGeneration = generation;
     audio.pause();
     updateButton();
     showSong(song);
-    setMediaSession(song);
+    setMetadata(song);
     setClass("is-loading", true);
     setClass("is-error", false);
-    setProgressEnabled(false);
+    ui.progress.disabled = true;
     ui.current.textContent = "0:00";
     ui.duration.textContent = "0:00";
 
     if (!source) {
-      notify("Invalid audio source.");
-      return tryNext(index, shouldPlay, generation);
+      handleFailedTrack(song, "Invalid audio source.", null);
+      return Promise.resolve(false);
     }
 
-    const type = mediaType(sources[attempted] || "");
+    const type = mediaType(song.src);
     if (type && audio.canPlayType(type) === "") {
-      console.info("Browser may not support this audio type", { type, source });
+      console.info("Browser may not support this media type", { type, source });
     }
     audio.src = source;
     audio.load();
-
-    return shouldPlay ? playAfterLoad(generation) : Promise.resolve(true);
+    return shouldPlay ? playCurrent() : Promise.resolve(true);
   }
 
-  function tryNext(fromIndex, shouldPlay, generation) {
-    if (generation !== state.skipGeneration) return Promise.resolve(false);
-    if (state.skipGeneration === generation && state.index === fromIndex) {
-      state.skipGeneration = -1;
-      return loadSong(fromIndex + 1, shouldPlay);
-    }
-    return Promise.resolve(false);
-  }
-
-  function handleError(event) {
-    const song = songs[state.index];
-    const source = audio.currentSrc || audio.src;
-    if (!song) return;
-    logMediaError(song, source, event);
+  function handleFailedTrack(song, message, event) {
+    logError(song, audio.currentSrc || audio.src, event);
     setClass("is-loading", false);
     setClass("is-error", true);
-    setProgressEnabled(false);
-    notify(errorMessage());
-
-    const nextIndex = (state.index + 1) % songs.length;
-    if (state.skipGeneration === state.generation) {
-      state.skipGeneration = -1;
-      if (nextIndex !== state.index) loadSong(nextIndex, !audio.paused);
-      else notify("No playable music found.");
+    ui.progress.disabled = true;
+    notify(message || errorMessage());
+    state.tried.add(state.index);
+    if (state.tried.size >= songs.length) {
+      showSong(song);
+      notify("No playable tracks");
+      return;
     }
+    loadSong(state.index + 1, true);
   }
 
   function next(shouldPlay = !audio.paused) {
     if (!songs.length) return;
+    state.tried.clear();
     loadSong(state.index + 1, shouldPlay);
   }
 
@@ -296,22 +296,21 @@
       audio.pause();
       return;
     }
-    if (state.pendingPlay) return;
-    playAfterLoad(state.generation);
+    playCurrent();
   }
 
   ui.play.addEventListener("click", togglePlay);
   ui.next?.addEventListener("click", () => next());
   ui.previous?.addEventListener("click", previous);
   ui.progress.addEventListener("input", () => {
-    if (validDuration()) ui.current.textContent = formatTime((Number(ui.progress.value) / 100) * audio.duration);
+    if (validDuration()) ui.current.textContent = formatTime(Number(ui.progress.value) / 100 * audio.duration);
   });
   ui.progress.addEventListener("change", () => {
-    if (validDuration()) audio.currentTime = (Number(ui.progress.value) / 100) * audio.duration;
+    if (validDuration()) audio.currentTime = Number(ui.progress.value) / 100 * audio.duration;
   });
 
-  ["loadstart", "waiting", "stalled"].forEach((eventName) => audio.addEventListener(eventName, () => setClass("is-loading", true)));
-  ["loadedmetadata", "loadeddata", "canplay", "playing", "pause", "suspend"].forEach((eventName) => audio.addEventListener(eventName, () => {
+  ["loadstart", "waiting", "stalled"].forEach((name) => audio.addEventListener(name, () => setClass("is-loading", true)));
+  ["loadedmetadata", "loadeddata", "canplay", "playing", "pause", "suspend"].forEach((name) => audio.addEventListener(name, () => {
     setClass("is-loading", false);
     updateButton();
     updateProgress();
@@ -319,22 +318,29 @@
   audio.addEventListener("timeupdate", updateProgress);
   audio.addEventListener("durationchange", updateProgress);
   audio.addEventListener("ended", () => next(true));
-  audio.addEventListener("error", handleError);
+  audio.addEventListener("error", (event) => handleFailedTrack(songs[state.index], errorMessage(), event));
 
   if ("mediaSession" in navigator) {
-    try {
-      navigator.mediaSession.setActionHandler("play", () => playAfterLoad(state.generation));
-      navigator.mediaSession.setActionHandler("pause", () => audio.pause());
-      navigator.mediaSession.setActionHandler("nexttrack", () => next());
-      navigator.mediaSession.setActionHandler("previoustrack", previous);
-    } catch (error) {
-      console.warn("Media Session actions unavailable", error);
+    const actions = {
+      play: () => playCurrent(),
+      pause: () => audio.pause(),
+      nexttrack: () => next(),
+      previoustrack: previous
+    };
+    for (const [action, handler] of Object.entries(actions)) {
+      try {
+        navigator.mediaSession.setActionHandler(action, handler);
+      } catch (error) {
+        console.info(`Media Session action unavailable: ${action}`, error);
+      }
     }
   }
 
-  if (songs.length) loadSong(0, false);
-  else {
+  if (songs.length) {
+    loadSong(0, false);
+  } else {
     showSong(null);
+    setClass("is-error", false);
     notify("No music available");
   }
 })();
