@@ -1,11 +1,10 @@
 // One source of truth for the playlist. Add or remove tracks here only.
 const MUSIC_LIBRARY = [
-  { src: "h3R3 - 忘不掉的你.flac" },
-  { src: "水仙LONE - 我走以后 (鼓点版).m4a" },
-  { src: "夏日尽头的我们 x 月光呀月光.mp3" },
-  { src: "Jess Lee - 甲乙丙丁Strangers.flac" },
-  { src: "Ta - 没有你我该怎么办.flac" }，
-  { src: "Renran - 无人之岛.m4a" },
+  "h3R3 - 忘不掉的你.flac",
+  "水仙LONE - 我走以后 (鼓点版).m4a",
+  "夏日尽头的我们 x 月光呀月光.mp3",
+  "Jess Lee - 甲乙丙丁Strangers.flac",
+  "Ta - 没有你我该怎么办.flac"
 ];
 
 const parseTrackMetadata = (source) => {
@@ -16,10 +15,15 @@ const parseTrackMetadata = (source) => {
   return { artist: filename.slice(0, separator), title: filename.slice(separator + 3) };
 };
 
-MUSIC_LIBRARY.forEach((track) => {
-  const parsed = parseTrackMetadata(track.src);
-  if (!track.title) track.title = parsed.title;
-  if (!track.artist) track.artist = parsed.artist;
+// Normalize every playlist item into { src, title, artist }.
+MUSIC_LIBRARY.forEach((track, index) => {
+  const normalizedTrack = typeof track === "string" ? { src: track } : track;
+  const parsed = parseTrackMetadata(normalizedTrack?.src);
+
+  if (!normalizedTrack.title) normalizedTrack.title = parsed.title;
+  if (!normalizedTrack.artist) normalizedTrack.artist = parsed.artist;
+
+  MUSIC_LIBRARY[index] = normalizedTrack;
 });
 
 (() => {
@@ -66,7 +70,12 @@ MUSIC_LIBRARY.forEach((track) => {
     const names = [...new Set([source, source.normalize("NFC"), source.normalize("NFD")])];
     return names.map((name) => new URL(name, document.baseURI).href);
   };
-  const errorText = () => ({ 1: "Audio loading was interrupted.", 2: "Network error or file not found.", 3: "File exists, but this browser could not decode it.", 4: "This browser does not support this audio format." }[audio.error?.code] || "Unable to load this track.");
+  const errorText = () => ({
+    1: "Audio loading was interrupted.",
+    2: "Network error or file not found.",
+    3: "File exists, but this browser could not decode it.",
+    4: "This browser does not support this audio format."
+  }[audio.error?.code] || "Unable to load this track.");
 
   function playCurrent() {
     if (!MUSIC_LIBRARY.length) { showTrack(null); notify("No music available"); return; }
@@ -77,42 +86,97 @@ MUSIC_LIBRARY.forEach((track) => {
       else if (error?.name !== "AbortError") notify("Unable to play this track.");
     });
   }
+
   function loadTrack(index, autoplay = false) {
     state.index = (index + MUSIC_LIBRARY.length) % MUSIC_LIBRARY.length;
     state.generation += 1; state.playingRequested = autoplay;
     const track = MUSIC_LIBRARY[state.index];
+
     audio.pause(); showTrack(track); setClass("is-error", false); setClass("is-loading", true);
     ui.progress.disabled = true; ui.current.textContent = "0:00"; ui.duration.textContent = "0:00";
+
     audio.src = resolvedUrls(track.src)[0]; audio.load();
     if (autoplay) playCurrent();
   }
+
   function skipFailedTrack() {
-    const failedIndex = state.index; state.tried.add(failedIndex); setClass("is-error", true); setClass("is-loading", false);
-    console.error("Audio load error", { track: MUSIC_LIBRARY[failedIndex], url: audio.currentSrc || audio.src, code: audio.error?.code, readyState: audio.readyState, networkState: audio.networkState });
+    const failedIndex = state.index;
+    state.tried.add(failedIndex);
+    setClass("is-error", true);
+    setClass("is-loading", false);
+
+    console.error("Audio load error", {
+      track: MUSIC_LIBRARY[failedIndex],
+      url: audio.currentSrc || audio.src,
+      code: audio.error?.code,
+      readyState: audio.readyState,
+      networkState: audio.networkState
+    });
+
     if (state.tried.size >= MUSIC_LIBRARY.length) { notify("No playable tracks"); return; }
-    notify(errorText()); loadTrack(failedIndex + 1, state.playingRequested);
+    notify(errorText());
+    loadTrack(failedIndex + 1, state.playingRequested);
   }
-  function nextTrack(autoplay = !audio.paused) { state.tried.clear(); loadTrack(state.index + 1, autoplay); }
-  function previousTrack() { if (audio.currentTime > 3) audio.currentTime = 0; else loadTrack(state.index - 1, !audio.paused); }
+
+  function nextTrack(autoplay = !audio.paused) {
+    state.tried.clear();
+    loadTrack(state.index + 1, autoplay);
+  }
+
+  function previousTrack() {
+    if (audio.currentTime > 3) audio.currentTime = 0;
+    else loadTrack(state.index - 1, !audio.paused);
+  }
 
   ui.play.addEventListener("click", () => {
     if (!MUSIC_LIBRARY.length) return notify("No music available");
-    if (!audio.paused && !audio.ended) { state.playingRequested = false; audio.pause(); } else playCurrent();
+    if (!audio.paused && !audio.ended) {
+      state.playingRequested = false;
+      audio.pause();
+    } else playCurrent();
   });
-  ui.next?.addEventListener("click", () => nextTrack()); ui.previous?.addEventListener("click", previousTrack);
-  ui.progress.addEventListener("input", () => { if (hasDuration()) ui.current.textContent = formatTime(Number(ui.progress.value) / 100 * audio.duration); });
-  ui.progress.addEventListener("change", () => { if (hasDuration()) audio.currentTime = Number(ui.progress.value) / 100 * audio.duration; });
 
-  ["loadstart", "waiting", "stalled"].forEach((event) => audio.addEventListener(event, () => setClass("is-loading", true)));
-  ["loadedmetadata", "loadeddata", "canplay", "playing", "pause", "suspend"].forEach((event) => audio.addEventListener(event, () => { setClass("is-loading", false); updateState(); updateProgress(); }));
-  ["timeupdate", "durationchange", "seeking", "seeked"].forEach((event) => audio.addEventListener(event, updateProgress));
+  ui.next?.addEventListener("click", () => nextTrack());
+  ui.previous?.addEventListener("click", previousTrack);
+
+  ui.progress.addEventListener("input", () => {
+    if (hasDuration()) ui.current.textContent = formatTime(Number(ui.progress.value) / 100 * audio.duration);
+  });
+
+  ui.progress.addEventListener("change", () => {
+    if (hasDuration()) audio.currentTime = Number(ui.progress.value) / 100 * audio.duration;
+  });
+
+  ["loadstart", "waiting", "stalled"].forEach((event) => {
+    audio.addEventListener(event, () => setClass("is-loading", true));
+  });
+
+  ["loadedmetadata", "loadeddata", "canplay", "playing", "pause", "suspend"].forEach((event) => {
+    audio.addEventListener(event, () => {
+      setClass("is-loading", false);
+      updateState();
+      updateProgress();
+    });
+  });
+
+  ["timeupdate", "durationchange", "seeking", "seeked"].forEach((event) => {
+    audio.addEventListener(event, updateProgress);
+  });
+
   audio.addEventListener("ended", () => nextTrack(true));
   audio.addEventListener("error", skipFailedTrack);
 
   if ("mediaSession" in navigator) {
-    for (const [action, handler] of Object.entries({ play: playCurrent, pause: () => audio.pause(), nexttrack: () => nextTrack(), previoustrack: previousTrack })) {
+    for (const [action, handler] of Object.entries({
+      play: playCurrent,
+      pause: () => audio.pause(),
+      nexttrack: () => nextTrack(),
+      previoustrack: previousTrack
+    })) {
       try { navigator.mediaSession.setActionHandler(action, handler); } catch {}
     }
   }
-  if (MUSIC_LIBRARY.length) loadTrack(0); else showTrack(null);
+
+  if (MUSIC_LIBRARY.length) loadTrack(0);
+  else showTrack(null);
 })();
