@@ -12,7 +12,7 @@ const MUSIC_LIBRARY = [
     artist: "鄭沛沛 & Pank",
     title: "沉溺(你让我的心不再结冰)"
   },
-  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E8%B1%AA%E5%A4%A7%E5%A4%A7%20-%20%E6%88%91%E7%9A%84%E6%AD%8C%E5%A3%B0%E9%87%8C%20(DJ%E8%B1%AA%E5%A4%A7%E5%A4%A7%E7%89%88).flac"
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E6%88%91%E7%9A%84%E6%AD%8C%E5%A3%B0%E9%87%8C%20(DJ%E7%87%83%E6%9B%B2)%EF%BD%9C%E2%80%9C%E4%BD%A0%E5%AD%98%E5%9C%A8%E6%88%91%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%84%91%E6%B5%B7%E9%87%8C%E2%80%9D.mp3"
 ];
 
 const parseTrackMetadata = (source) => {
