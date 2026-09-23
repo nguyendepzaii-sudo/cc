@@ -4,7 +4,8 @@ const MUSIC_LIBRARY = [
   "水仙LONE - 我走以后 (鼓点版).m4a",
   "夏日尽头的我们 x 月光呀月光.mp3",
   "Jess Lee - 甲乙丙丁Strangers.flac",
-  "Ta - 没有你我该怎么办.flac"
+  "Ta - 没有你我该怎么办.flac",
+  "Renran - 无人之岛.m4a"
 ];
 
 const parseTrackMetadata = (source) => {
