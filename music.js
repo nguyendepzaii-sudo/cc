@@ -7,7 +7,7 @@ const MUSIC_LIBRARY = [
   "Ta - 没有你我该怎么办.flac",
   "Renran - 无人之岛.m4a",
   {
-    src: "https://pub-a6f896b739e543b7a5a3e838dd05edf9.r2.dev/%E9%84%92%E6%B2%9B%E6%B2%9B%20%26%20Pank%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0)%20-%20Single%20(2023)%20.%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0).m4a",
+    src: "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E9%84%92%E6%B2%9B%E6%B2%9B%20%26%20Pank%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0)%20-%20Single%20(2023)%20.%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0).m4a",
     // Overridden manually: filename's raw " - Single (2023)" segment doesn't split cleanly into artist/title.
     artist: "鄭沛沛 & Pank",
     title: "沉溺(你让我的心不再结冰)"
