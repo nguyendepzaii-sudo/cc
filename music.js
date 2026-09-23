@@ -1,34 +1,15 @@
 (() => {
   "use strict";
 
-  // Thêm bài hát mới ở đây sau khi upload file nhạc vào thư mục gốc của repo.
-  // Chỉ cần thêm một object gồm: title, artist và src (đúng tên file).
+  // Chỉ cần thêm đúng tên file nhạc vào đây sau khi upload vào thư mục gốc của repo.
+  // Ví dụ: "Nghệ sĩ - Tên bài.mp3" hoặc "Tên bài.mp3"
+  // Tên file sẽ được tự động tách thành artist/title nếu có " - ".
   const MUSIC_LIBRARY = [
-    {
-      title: "甲乙丙丁 (Strangers)",
-      artist: "Jess Lee",
-      src: "Jess Lee - 甲乙丙丁Strangers.flac"
-    },
-    {
-      title: "没有你我该怎么办",
-      artist: "Ta",
-      src: "Ta - 没有你我该怎么办.flac"
-    },
-    {
-      title: "忘不掉的你",
-      artist: "h3R3",
-      src: "h3R3 - 忘不掉的你.flac"
-    },
-    {
-      title: "夏日尽头的我们 x 月光呀月光",
-      artist: "",
-      src: "夏日尽头的我们 x 月光呀月光.mp3"
-    },
-    {
-      title: "我走以后 (鼓点版)",
-      artist: "水仙LONE",
-      src: "水仙LONE - 我走以后 (鼓点版).m4a"
-    }
+    "Jess Lee - 甲乙丙丁Strangers.flac",
+    "Ta - 没有你我该怎么办.flac",
+    "h3R3 - 忘不掉的你.flac",
+    "夏日尽头的我们 x 月光呀月光.mp3",
+    "水仙LONE - 我走以后 (鼓点版).m4a"
   ];
 
   const config = window.SITE_CONFIG || {};
@@ -49,7 +30,28 @@
 
   if (!audio || !ui.title || !ui.progress || !ui.play) return;
 
+  function songFromFilename(filename) {
+    const src = String(filename || "").trim();
+    const noExt = src.replace(/\.[^./\\?#]+(?:[?#].*)?$/, "");
+    const separator = noExt.indexOf(" - ");
+
+    if (separator >= 0) {
+      return {
+        artist: noExt.slice(0, separator).trim() || "Unknown artist",
+        title: noExt.slice(separator + 3).trim() || noExt,
+        src
+      };
+    }
+
+    return {
+      artist: "Unknown artist",
+      title: noExt || "Untitled",
+      src
+    };
+  }
+
   // Có thể dùng SITE_CONFIG.music nếu cần ghi đè danh sách mặc định.
+  // Mỗi phần tử có thể là chuỗi file hoặc object cũ.
   const configuredSongs = Array.isArray(config.music)
     ? config.music
     : Array.isArray(config.music?.songs)
@@ -59,13 +61,17 @@
         : null;
   const rawSongs = configuredSongs?.length ? configuredSongs : MUSIC_LIBRARY;
   const songs = rawSongs
+    .map((song) => typeof song === "string" ? songFromFilename(song) : song)
     .filter((song) => song && typeof song === "object" && String(song.src || "").trim())
-    .map((song) => ({
-      title: String(song.title || "Untitled"),
-      artist: String(song.artist || "Unknown artist"),
-      src: String(song.src).trim(),
-      fallback: song.fallback
-    }));
+    .map((song) => {
+      const auto = songFromFilename(song.src);
+      return {
+        title: String(song.title || auto.title || "Untitled"),
+        artist: String(song.artist || auto.artist || "Unknown artist"),
+        src: String(song.src).trim(),
+        fallback: song.fallback
+      };
+    });
 
   const state = {
     index: 0,
@@ -102,7 +108,6 @@
     if (!enabled) ui.progress.value = "0";
   }
 
-  // URL() preserves already escaped sequences and escapes raw Unicode/spaces once.
   function resolveSource(source) {
     try {
       return new URL(source, document.baseURI).href;
