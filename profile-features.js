@@ -4,9 +4,9 @@
 // ==============================
 const PROFILE_CONFIG = {
   username: "spekco",
-  status: "sleep",
-  statusIcon: "💤",
-  bio: ".gg/xnhau",
+  status: "studying",
+  statusIcon: "📙",
+  bio: "Making memories",
   avatar: "avatar.jpg",
   titleSuffix: "Profile",
   musicLabel: "now playing",
