@@ -11,7 +11,8 @@ const MUSIC_LIBRARY = [
     // Overridden manually: filename's raw " - Single (2023)" segment doesn't split cleanly into artist/title.
     artist: "鄭沛沛 & Pank",
     title: "沉溺(你让我的心不再结冰)"
-  }
+  },
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E8%B1%AA%E5%A4%A7%E5%A4%A7%20-%20%E6%88%91%E7%9A%84%E6%AD%8C%E5%A3%B0%E9%87%8C%20(DJ%E8%B1%AA%E5%A4%A7%E5%A4%A7%E7%89%88).flac"
 ];
 
 const parseTrackMetadata = (source) => {
