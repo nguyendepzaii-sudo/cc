@@ -8,7 +8,7 @@ const MUSIC_LIBRARY = [
   "Renran - 无人之岛.m4a",
   "鄒沛沛 & Pank 沉溺(你让我的心不再结冰) - Single (2023) . 沉溺(你让我的心不再结冰).m4a"
   {
-    src: "music",
+    src: "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/h3R3%20-%20%E4%BA%B2%E7%88%B1%E7%9A%84.flac",
     // Overridden manually: filename's raw " - Single (2023)" segment doesn't split cleanly into artist/title.
     
   },
