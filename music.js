@@ -1,6 +1,36 @@
 (() => {
   "use strict";
 
+  // Thêm bài hát mới ở đây sau khi upload file nhạc vào thư mục gốc của repo.
+  // Chỉ cần thêm một object gồm: title, artist và src (đúng tên file).
+  const MUSIC_LIBRARY = [
+    {
+      title: "甲乙丙丁 (Strangers)",
+      artist: "Jess Lee",
+      src: "Jess Lee - 甲乙丙丁Strangers.flac"
+    },
+    {
+      title: "没有你我该怎么办",
+      artist: "Ta",
+      src: "Ta - 没有你我该怎么办.flac"
+    },
+    {
+      title: "忘不掉的你",
+      artist: "h3R3",
+      src: "h3R3 - 忘不掉的你.flac"
+    },
+    {
+      title: "夏日尽头的我们 x 月光呀月光",
+      artist: "",
+      src: "夏日尽头的我们 x 月光呀月光.mp3"
+    },
+    {
+      title: "我走以后 (鼓点版)",
+      artist: "水仙LONE",
+      src: "水仙LONE - 我走以后 (鼓点版).m4a"
+    }
+  ];
+
   const config = window.SITE_CONFIG || {};
   const audio = document.getElementById("audio-player");
   const $ = (id) => document.getElementById(id);
@@ -19,13 +49,15 @@
 
   if (!audio || !ui.title || !ui.progress || !ui.play) return;
 
-  const rawSongs = Array.isArray(config.music)
+  // Có thể dùng SITE_CONFIG.music nếu cần ghi đè danh sách mặc định.
+  const configuredSongs = Array.isArray(config.music)
     ? config.music
     : Array.isArray(config.music?.songs)
       ? config.music.songs
       : Array.isArray(window.MUSIC_CONFIG)
         ? window.MUSIC_CONFIG
-        : [];
+        : null;
+  const rawSongs = configuredSongs?.length ? configuredSongs : MUSIC_LIBRARY;
   const songs = rawSongs
     .filter((song) => song && typeof song === "object" && String(song.src || "").trim())
     .map((song) => ({
@@ -228,7 +260,6 @@
     setProgressEnabled(false);
     notify(errorMessage());
 
-    // A failed fallback is tried first; then each other song is tried once.
     const nextIndex = (state.index + 1) % songs.length;
     if (state.skipGeneration === state.generation) {
       state.skipGeneration = -1;
