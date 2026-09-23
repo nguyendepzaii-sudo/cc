@@ -13,7 +13,8 @@ const MUSIC_LIBRARY = [
     
   },
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E6%88%91%E7%9A%84%E6%AD%8C%E5%A3%B0%E9%87%8C%20(DJ%E7%87%83%E6%9B%B2)%EF%BD%9C%E2%80%9C%E4%BD%A0%E5%AD%98%E5%9C%A8%E6%88%91%E6%B7%B1%E6%B7%B1%E7%9A%84%E8%84%91%E6%B5%B7%E9%87%8C%E2%80%9D.mp3",
-  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/LBI%20-%20%E5%8F%AF%E6%88%91%E5%8F%AA%E6%98%AF%E6%B5%B7.flac"
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/LBI%20-%20%E5%8F%AF%E6%88%91%E5%8F%AA%E6%98%AF%E6%B5%B7.flac",
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/Linfeng%20Zhou%20-%20%E5%BF%98%E4%BA%86.opus"
 ];
 
 const parseTrackMetadata = (source) => {
