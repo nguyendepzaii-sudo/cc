@@ -5,7 +5,8 @@ const MUSIC_LIBRARY = [
   "夏日尽头的我们 x 月光呀月光.mp3",
   "Jess Lee - 甲乙丙丁Strangers.flac",
   "Ta - 没有你我该怎么办.flac",
-  "Renran - 无人之岛.m4a"
+  "Renran - 无人之岛.m4a",
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E9%84%92%E6%B2%9B%E6%B2%9B%20%26%20Pank%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0)%20-%20Single%20(2023)%20.%20%E6%B2%89%E6%BA%BA(%E4%BD%A0%E8%AE%A9%E6%88%91%E7%9A%84%E5%BF%83%E4%B8%8D%E5%86%8D%E7%BB%93%E5%86%B0).m4a"
 ];
 
 const parseTrackMetadata = (source) => {
