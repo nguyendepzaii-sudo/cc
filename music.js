@@ -1,11 +1,25 @@
 // One source of truth for the playlist. Add or remove tracks here only.
 const MUSIC_LIBRARY = [
-  { title: "忘不掉的你", artist: "h3R3", src: "h3R3 - 忘不掉的你.flac" },
-  { title: "我走以后 (鼓点版)", artist: "水仙LONE", src: "水仙LONE - 我走以后 (鼓点版).m4a" },
-  { title: "夏日尽头的我们 x 月光呀月光", artist: "", src: "夏日尽头的我们 x 月光呀月光.mp3" },
-  { title: "甲乙丙丁Strangers", artist: "Jess Lee", src: "Jess Lee - 甲乙丙丁Strangers.flac" },
-  { title: "没有你我该怎么办", artist: "Ta", src: "Ta - 没有你我该怎么办.flac" }
+  { src: "h3R3 - 忘不掉的你.flac" },
+  { src: "水仙LONE - 我走以后 (鼓点版).m4a" },
+  { src: "夏日尽头的我们 x 月光呀月光.mp3" },
+  { src: "Jess Lee - 甲乙丙丁Strangers.flac" },
+  { src: "Ta - 没有你我该怎么办.flac" }
 ];
+
+const parseTrackMetadata = (source) => {
+  if (!source || typeof source !== "string") return { title: "", artist: "" };
+  const filename = source.replace(/\.[^.]+$/, "");
+  const separator = filename.indexOf(" - ");
+  if (separator === -1) return { title: filename, artist: "" };
+  return { artist: filename.slice(0, separator), title: filename.slice(separator + 3) };
+};
+
+MUSIC_LIBRARY.forEach((track) => {
+  const parsed = parseTrackMetadata(track.src);
+  if (!track.title) track.title = parsed.title;
+  if (!track.artist) track.artist = parsed.artist;
+});
 
 (() => {
   "use strict";
