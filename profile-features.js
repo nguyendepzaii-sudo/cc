@@ -4,8 +4,8 @@
 // ==============================
 const PROFILE_CONFIG = {
   username: "spekco",
-  status: "chill",
-  statusIcon: "🤔",
+  status: "sap chet",
+  statusIcon: "🫩",
   bio: "Making memories",
   avatar: "avatar.jpg",
   titleSuffix: "Profile",
