@@ -17,7 +17,8 @@ const MUSIC_LIBRARY = [
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/LBI%20-%20%E5%8F%AF%E6%88%91%E5%8F%AA%E6%98%AF%E6%B5%B7.flac",
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/Linfeng%20Zhou%20-%20%E5%BF%98%E4%BA%86.opus",
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/Chen%20Li%20-%20%E7%BB%9D%E5%AF%B9%E5%8D%A0%E6%9C%89%E7%9B%B8%E5%AF%B9%E8%87%AA%E7%94%B1.flac",
-  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E9%99%88%E6%9D%91%E9%95%BF%20-%20%E7%88%B1%E6%80%8E%E4%B9%88%E4%BA%86.flac"
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E9%99%88%E6%9D%91%E9%95%BF%20-%20%E7%88%B1%E6%80%8E%E4%B9%88%E4%BA%86.flac",
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/1K%20-%20%E5%B0%B1%E5%BF%98%E4%BA%86%E5%90%A7.flac"
 ];
 
 const parseTrackMetadata = (source) => {
