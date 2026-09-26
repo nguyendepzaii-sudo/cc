@@ -21,7 +21,8 @@ const MUSIC_LIBRARY = [
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/1K%20-%20%E5%B0%B1%E5%BF%98%E4%BA%86%E5%90%A7.flac",
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/h3R3%20-%20Liar.flac",
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/%E6%AD%90%E9%99%BD%E8%80%80%E7%91%A9%20-%20%E6%88%92%E4%B8%8D%E6%8E%89%20(%E5%8E%9F%E5%A3%B0%E7%89%88).m4a",
-  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/en%20-%20%E6%9C%80%E5%90%8E%E4%B8%80%E9%A1%B5.flac"
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/en%20-%20%E6%9C%80%E5%90%8E%E4%B8%80%E9%A1%B5.flac",
+  "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/17.%20Die%20For%20You.flac"
 ];
 
 const parseTrackMetadata = (source) => {
