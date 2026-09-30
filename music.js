@@ -25,6 +25,18 @@ const MUSIC_LIBRARY = [
   "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/17.%20Die%20For%20You.flac"
 ];
 
+// Cấu hình phần R2 (tuỳ chọn). Trình duyệt KHÔNG tự liệt kê được file trong bucket R2,
+// nên muốn bài mới up lên R2 tự hiện trong playlist thì cần 1 "chỉ mục" JSON:
+//   - r2IndexUrl: link tới file JSON (vd. songs.json nằm trong bucket, hoặc 1 Cloudflare Worker trả JSON).
+//     JSON là mảng tên file ["a.mp3", ...] hoặc {"files": [...]}; mỗi phần tử là tên file/URL hoặc {src|url|key, title, artist}.
+//   - Để trống "" = chỉ dùng danh sách MUSIC_LIBRARY ở trên (đã gồm các link R2 khai báo trong code).
+const MUSIC_SETTINGS = {
+  r2Base: "https://pub-a6f896b739e543b7a5a3f838dd05edf9.r2.dev/",
+  r2IndexUrl: "",
+  r2CacheMs: 5 * 60 * 1000,
+  audioExt: /\.(mp3|m4a|aac|ogg|opus|wav|flac|webm)$/i
+};
+
 const parseTrackMetadata = (source) => {
   if (!source || typeof source !== "string") return { title: "", artist: "" };
 
@@ -55,14 +67,18 @@ const parseTrackMetadata = (source) => {
 };
 
 // Normalize every playlist item into { src, title, artist }.
-MUSIC_LIBRARY.forEach((track, index) => {
+const normalizeTrack = (track) => {
   const normalizedTrack = typeof track === "string" ? { src: track } : track;
   const parsed = parseTrackMetadata(normalizedTrack?.src);
 
   if (!normalizedTrack.title) normalizedTrack.title = parsed.title;
   if (!normalizedTrack.artist) normalizedTrack.artist = parsed.artist;
 
-  MUSIC_LIBRARY[index] = normalizedTrack;
+  return normalizedTrack;
+};
+
+MUSIC_LIBRARY.forEach((track, index) => {
+  MUSIC_LIBRARY[index] = normalizeTrack(track);
 });
 
 (() => {
@@ -77,6 +93,10 @@ MUSIC_LIBRARY.forEach((track, index) => {
   if (!audio || !ui.title || !ui.artist || !ui.progress || !ui.duration || !ui.play) return;
 
   const state = { index: 0, playingRequested: false, tried: new Set(), toastTimer: 0, generation: 0 };
+  const pl = { button: $("playlist-button"), panel: $("playlist-panel"), list: $("playlist-list"), count: $("playlist-count"), note: $("playlist-note") };
+  const playlistReady = Boolean(pl.button && pl.panel && pl.list);
+  const failedTracks = new Set();
+  const reduceMotion = Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
   const formatTime = (value) => {
     if (!Number.isFinite(value) || value < 0) return "0:00";
     const seconds = Math.floor(value);
@@ -135,12 +155,14 @@ MUSIC_LIBRARY.forEach((track, index) => {
     ui.progress.disabled = true; ui.current.textContent = "0:00"; ui.duration.textContent = "0:00";
 
     audio.src = resolvedUrls(track.src)[0]; audio.load();
+    onTrackChanged();
     if (autoplay) playCurrent();
   }
 
   function skipFailedTrack() {
     const failedIndex = state.index;
     state.tried.add(failedIndex);
+    failedTracks.add(failedIndex); syncPlaylist();
     setClass("is-error", true);
     setClass("is-loading", false);
 
@@ -202,6 +224,7 @@ MUSIC_LIBRARY.forEach((track, index) => {
     audio.addEventListener(event, updateProgress);
   });
 
+  audio.addEventListener("loadedmetadata", () => { if (failedTracks.delete(state.index)) syncPlaylist(); });
   audio.addEventListener("ended", () => nextTrack(true));
   audio.addEventListener("error", skipFailedTrack);
 
@@ -216,6 +239,159 @@ MUSIC_LIBRARY.forEach((track, index) => {
     }
   }
 
+
+  // ---------- Playlist ----------
+  const trackKey = (src) => {
+    let name = String(src || "");
+    try { name = new URL(name, document.baseURI).pathname.split("/").filter(Boolean).pop() || ""; } catch {}
+    try { name = decodeURIComponent(name); } catch {}
+    return name.normalize("NFC").toLowerCase();
+  };
+
+  function setNote(text) {
+    if (!pl.note) return;
+    pl.note.textContent = text || "";
+    pl.note.hidden = !text;
+  }
+
+  function renderPlaylist() {
+    if (!playlistReady) return;
+    const fragment = document.createDocumentFragment();
+    MUSIC_LIBRARY.forEach((track, index) => {
+      const item = document.createElement("li");
+      const button = document.createElement("button");
+      button.type = "button"; button.className = "pl-item"; button.dataset.index = String(index);
+      button.title = track.artist ? `${track.title} — ${track.artist}` : (track.title || "");
+
+      const badge = document.createElement("span"); badge.className = "pl-badge"; badge.setAttribute("aria-hidden", "true");
+      const number = document.createElement("span"); number.className = "pl-num"; number.textContent = String(index + 1);
+      const bars = document.createElement("span"); bars.className = "pl-bars";
+      bars.append(document.createElement("i"), document.createElement("i"), document.createElement("i"));
+      badge.append(number, bars);
+
+      const meta = document.createElement("span"); meta.className = "pl-meta";
+      const title = document.createElement("span"); title.className = "pl-title"; title.textContent = track.title || "Không rõ tên";
+      meta.append(title);
+      if (track.artist) {
+        const artist = document.createElement("span"); artist.className = "pl-artist"; artist.textContent = track.artist;
+        meta.append(artist);
+      }
+
+      button.append(badge, meta); item.append(button); fragment.append(item);
+    });
+    if (!MUSIC_LIBRARY.length) {
+      const empty = document.createElement("li"); empty.className = "pl-empty"; empty.textContent = "Chưa có bài nào";
+      fragment.append(empty);
+    }
+    pl.list.replaceChildren(fragment);
+    if (pl.count) pl.count.textContent = MUSIC_LIBRARY.length ? `${MUSIC_LIBRARY.length} bài` : "";
+    syncPlaylist();
+  }
+
+  function syncPlaylist() {
+    if (!playlistReady) return;
+    for (const button of pl.list.querySelectorAll(".pl-item")) {
+      const index = Number(button.dataset.index);
+      const current = index === state.index;
+      button.classList.toggle("is-current", current);
+      button.classList.toggle("is-failed", failedTracks.has(index));
+      if (current) button.setAttribute("aria-current", "true"); else button.removeAttribute("aria-current");
+    }
+  }
+
+  function scrollToCurrent(smooth) {
+    if (!playlistReady) return;
+    const current = pl.list.querySelector(".pl-item.is-current");
+    if (!current) return;
+    const top = current.offsetTop - (pl.list.clientHeight - current.offsetHeight) / 2;
+    pl.list.scrollTo({ top: Math.max(0, top), behavior: smooth && !reduceMotion ? "smooth" : "auto" });
+  }
+
+  function onTrackChanged() {
+    if (!playlistReady) return;
+    syncPlaylist();
+    if (pl.panel.classList.contains("is-open")) scrollToCurrent(true);
+  }
+
+  function setPlaylistOpen(open) {
+    if (!playlistReady) return;
+    pl.panel.classList.toggle("is-open", open);
+    pl.panel.setAttribute("aria-hidden", String(!open));
+    pl.button.setAttribute("aria-expanded", String(open));
+    pl.button.setAttribute("aria-label", open ? "Đóng danh sách nhạc" : "Mở danh sách nhạc");
+    pl.button.classList.toggle("is-active", open);
+    if (open) { refreshR2Index(); scrollToCurrent(false); }
+    else if (pl.panel.contains(document.activeElement)) pl.button.focus();
+  }
+
+  // R2 index (tuỳ chọn, chỉ chạy khi MUSIC_SETTINGS.r2IndexUrl có giá trị)
+  let r2LoadedAt = 0; let r2Busy = false;
+  const buildR2Url = (key) => MUSIC_SETTINGS.r2Base + String(key).replace(/^\/+/, "").split("/").map(encodeURIComponent).join("/");
+
+  function toR2Track(entry) {
+    const raw = typeof entry === "string" ? { src: entry } : entry;
+    if (!raw || typeof raw !== "object") return null;
+    let src = String(raw.src || raw.url || "");
+    if (!src && (raw.key || raw.name)) src = buildR2Url(raw.key || raw.name);
+    else if (src && !/^(https?:)?\/\//i.test(src) && !src.startsWith("/")) src = buildR2Url(src);
+    if (!src || !MUSIC_SETTINGS.audioExt.test(trackKey(src))) return null;
+    return normalizeTrack({ src, title: raw.title, artist: raw.artist });
+  }
+
+  async function refreshR2Index(force = false) {
+    if (!MUSIC_SETTINGS.r2IndexUrl || r2Busy) return;
+    if (!force && r2LoadedAt && Date.now() - r2LoadedAt < MUSIC_SETTINGS.r2CacheMs) return;
+    r2Busy = true;
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = setTimeout(() => controller?.abort(), 8000);
+    try {
+      const response = await fetch(MUSIC_SETTINGS.r2IndexUrl, { cache: "no-cache", signal: controller?.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      const entries = Array.isArray(data) ? data : (data?.files || data?.tracks || data?.objects);
+      if (!Array.isArray(entries)) throw new Error("Invalid R2 index");
+      const known = new Set(MUSIC_LIBRARY.map((track) => trackKey(track.src)));
+      const fresh = [];
+      for (const entry of entries) {
+        const track = toR2Track(entry);
+        if (!track) continue;
+        const key = trackKey(track.src);
+        if (known.has(key)) continue;
+        known.add(key); fresh.push(track);
+      }
+      fresh.sort((a, b) => String(a.title).localeCompare(String(b.title), "vi", { numeric: true, sensitivity: "base" }));
+      r2LoadedAt = Date.now(); setNote("");
+      if (fresh.length) {
+        MUSIC_LIBRARY.push(...fresh);
+        renderPlaylist();
+        if (!audio.getAttribute("src")) loadTrack(0);
+      }
+    } catch (error) {
+      console.warn("R2 index unavailable", error);
+      setNote("Không tải được danh sách từ R2, đang hiện danh sách có sẵn.");
+    } finally {
+      clearTimeout(timer); r2Busy = false;
+    }
+  }
+
+  if (playlistReady) {
+    pl.button.addEventListener("click", () => setPlaylistOpen(!pl.panel.classList.contains("is-open")));
+    pl.list.addEventListener("click", (event) => {
+      const button = event.target?.closest?.(".pl-item");
+      if (!button || !pl.list.contains(button)) return;
+      const index = Number(button.dataset.index);
+      if (!Number.isInteger(index) || index < 0 || index >= MUSIC_LIBRARY.length) return;
+      if (index === state.index && !failedTracks.has(index)) { ui.play.click(); return; }
+      state.tried.clear(); failedTracks.delete(index);
+      loadTrack(index, true);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && pl.panel.classList.contains("is-open")) { setPlaylistOpen(false); pl.button.focus(); }
+    });
+    renderPlaylist();
+  }
+
   if (MUSIC_LIBRARY.length) loadTrack(0);
   else showTrack(null);
+  refreshR2Index();
 })();
