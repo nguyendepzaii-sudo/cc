@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Fredoka:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="style.css?v=20260930">
+  <link rel="stylesheet" href="style.css?v=20260930b">
 </head>
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
@@ -46,24 +46,29 @@
       </div>
       <div class="controls">
         <button class="music-button" id="prev-button" type="button" aria-label="Previous track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h2v13H6zM18 5.5 9 12l9 6.5z"></path></svg></button>
-        <button class="music-button play-button" id="play-button" type="button" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"></path></svg></button>
+        <button class="music-button play-button" id="play-button" type="button" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"></path></svg><svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"></path></svg></button>
         <button class="music-button" id="next-button" type="button" aria-label="Next track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5.5h2v13h-2zM6 5.5 15 12l-9 6.5z"></path></svg></button>
-        <button class="music-button" id="playlist-button" type="button" aria-label="Open playlist" aria-expanded="false" aria-controls="playlist-panel">
+        <button class="music-button" id="playlist-button" type="button" aria-label="Mở danh sách nhạc" aria-expanded="false" aria-controls="playlist-panel">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h12v2H4zm0 5h12v2H4zm0 5h7v2H4zm13 0h3v2h-3zm0-10h3v2h-3zm0 5h3v2h-3z"></path></svg>
         </button>
       </div>
-      <div class="playlist-panel" id="playlist-panel" aria-label="Playlist" aria-hidden="true">
-        <div class="playlist-toolbar">
-          <input id="playlist-search" type="search" placeholder="Tìm bài..." aria-label="Tìm bài trong danh sách nhạc" autocomplete="off" spellcheck="false">
-          <span id="playlist-meta" class="playlist-meta">0/0 bài</span>
+      <div class="playlist-panel" id="playlist-panel" aria-hidden="true">
+        <div class="playlist-clip">
+          <div class="playlist-box">
+            <div class="playlist-head">
+              <span class="playlist-title">Danh sách nhạc</span>
+              <span class="playlist-count" id="playlist-count"></span>
+            </div>
+            <p class="playlist-note" id="playlist-note" hidden></p>
+            <ul class="playlist-list" id="playlist-list" aria-label="Danh sách nhạc"></ul>
+          </div>
         </div>
-        <div id="playlist-list" class="playlist-list" role="listbox" aria-label="Danh sách nhạc"></div>
       </div>
       <audio id="audio-player" preload="metadata"></audio>
     </section>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="profile-features.js?v=20260930"></script>
-  <script src="music.js?v=20260930"></script>
+  <script src="profile-features.js?v=20260930b"></script>
+  <script src="music.js?v=20260930b"></script>
 </body>
 </html>
