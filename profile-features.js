@@ -4,7 +4,6 @@
 // ==============================
 const PROFILE_CONFIG = {
   username: "spekco",
-  status: "chill",
   statusIcon: "🫩", 
   bio: "Making memories",
   avatar: "avatar.jpg",
@@ -28,9 +27,7 @@ window.PROFILE_CONFIG = PROFILE_CONFIG;
     const wrapper = document.querySelector(".avatar-wrapper");
 
     $("profile-name")?.replaceChildren(document.createTextNode(profile.username));
-    $("status-text")?.replaceChildren(document.createTextNode(profile.status));
     $("status-emoji")?.replaceChildren(document.createTextNode(profile.statusIcon));
-    $("status-emoji-text")?.replaceChildren(document.createTextNode(profile.statusIcon));
     $("music-label")?.replaceChildren(document.createTextNode(profile.musicLabel));
     document.title = `${profile.username} | ${profile.titleSuffix}`;
 
@@ -39,13 +36,10 @@ window.PROFILE_CONFIG = PROFILE_CONFIG;
       avatar.alt = `${profile.username}'s avatar`;
       avatar.addEventListener("error", () => wrapper?.classList.add("no-image"), { once: true });
     }
-    const initial = $("avatar-initial");
+    const initial = document.querySelector(".avatar-initial");
     if (initial) initial.textContent = profile.username.charAt(0).toLowerCase();
 
-    const inactive = /offline|away|sleep/i.test(profile.status);
-    $("status-badge")?.classList.toggle("offline-text", inactive);
-    $("status-dot")?.classList.toggle("offline", inactive);
-    document.querySelector('meta[name="description"]')?.setAttribute("content", `Profile của ${profile.username} — now playing và trạng thái hiện tại.`);
+    document.querySelector('meta[name="description"]')?.setAttribute("content", `Profile của ${profile.username} — now playing.`);
     document.querySelector('meta[property="og:title"]')?.setAttribute("content", `${profile.username} | ${profile.titleSuffix}`);
   }
 
